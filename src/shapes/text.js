@@ -9,14 +9,10 @@
     };
 
     function Text(options) {
-        this.defaultOptions = defaultOptions;
-        this.options = options || this.defaultOptions;
-        app.shape.initializeOptions.call(this);
+        this.initializeOptions(defaultOptions, options);
     }
 
-    Text.prototype.set = function(options) {
-        app.shape.setOptions.apply(this, [options]);
-    };
+    Text.prototype = new app.Shape();
 
     Text.prototype.draw = function(ctx) {
         ctx.font = this.options.font;

@@ -8,14 +8,10 @@
     };
 
     function Rectangle(options) {
-        this.defaultOptions = defaultOptions;
-        this.options = options || this.defaultOptions;
-        app.shape.initializeOptions.call(this);
+        this.initializeOptions(defaultOptions, options);
     }
 
-    Rectangle.prototype.set = function(options) {
-        app.shape.setOptions.apply(this, [options]);
-    }
+    Rectangle.prototype = new app.Shape();
 
     Rectangle.prototype.draw = function(ctx) {
         ctx.fillStyle = this.options.fill;

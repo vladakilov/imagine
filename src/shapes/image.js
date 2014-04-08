@@ -8,14 +8,10 @@
 
     function Img(imageObj, options) {
         this.imageObj = imageObj;
-        this.defaultOptions = defaultOptions;
-        this.options = options || this.defaultOptions;
-        app.shape.initializeOptions.call(this);
+        this.initializeOptions(defaultOptions, options);
     }
 
-    Img.prototype.set = function(options) {
-        app.shape.setOptions.apply(this, [options]);
-    };
+    Img.prototype = new app.Shape();
 
     Img.prototype.draw = function(ctx) {
         ctx.drawImage(this.imageObj, this.options.left, this.options.top);

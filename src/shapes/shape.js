@@ -1,18 +1,21 @@
-(function() {
-    function initializeOptions() {
-        for (option in this.defaultOptions) {
-            this.options[option] = this.options[option] || this.defaultOptions[option];
-        }
-    }
+(function(app) {
 
-    function setOptions(options) {
+    function Shape() {}
+
+    Shape.prototype.initializeOptions = function(defaultOptions, options) {
+        this.options = options || {};
+
+        for (option in defaultOptions) {
+            this.options[option] = this.options[option] || defaultOptions[option];
+        }
+    };
+
+    Shape.prototype.set = function(options) {
         for (option in options) {
             this.options[option] = options[option];
         }
-    }
+    };
 
-    app.shape = {
-        initializeOptions: initializeOptions,
-        setOptions: setOptions
-    }
+    app.Shape = Shape;
+
 }(window.app = window.app || {}));
