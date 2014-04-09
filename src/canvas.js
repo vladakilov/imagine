@@ -1,5 +1,8 @@
 var app = (function(app) {
 
+    var dragging,
+        dragHold = {};
+
     function Canvas(id) {
         this.id = id;
         this.canvas = document.getElementById(this.id);
@@ -8,7 +11,6 @@ var app = (function(app) {
         this.activeObject;
         this.canvas.addEventListener('mousedown', this, false);
         this.canvas.addEventListener('mousemove', this, false);
-        this.dragging = false;
     }
 
     Canvas.prototype.getCanvasId = function() {
@@ -37,7 +39,6 @@ var app = (function(app) {
 
     Canvas.prototype.removeCanvasObject = function(index) {
         this.canvasObjects.splice(index, 1);
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.reDrawObjects();
     }
 
@@ -55,7 +56,6 @@ var app = (function(app) {
             obj.draw(this.ctx);
         }
     };
-
 
     Canvas.prototype.handleEvent = function(event) {
         switch (event.type) {
@@ -76,23 +76,22 @@ var app = (function(app) {
 
     function mouseDownListener(event) {
         var object = getTargetObject(event, this.canvasObjects);
-        this.dragging = object ? true : false;
+        dragging = object ? true : false;
 
         if (object) {
             this.setActiveObject(object);
+            console.log(object)
             object.options.strokeWidth = 2;
-            object.options.strokeStyle ='red';
-        } 
+            object.options.strokeStyle = 'red';
+        }
 
-        if (object && this.dragging) {
-            var bRect = this.canvas.getBoundingClientRect();
-            mouseX = (event.clientX - bRect.left) * (this.canvas.width / bRect.width);
-            mouseY = (event.clientY - bRect.top) * (this.canvas.height / bRect.height);
-            this.dragHoldX = mouseX - object.options.left;
-            this.dragHoldY = mouseY - object.options.top;
+        if (object && dragging) {
+            var mouseLocation = windowToCanvas(event, this.canvas);
+            dragHold.x = mouseLocation.x - object.options.left;
+            dragHold.y = mouseLocation.y - object.options.top;
             window.addEventListener('mousemove', this, false);
         }
-        
+
         this.reDrawObjects();
         this.canvas.removeEventListener('mousedown', this, false);
         window.addEventListener('mouseup', this, false);
@@ -101,28 +100,27 @@ var app = (function(app) {
     function mouseMoveListener(event) {
         var object = this.getActiveObject();
 
-        if (this.dragging && object) {
+        if (dragging && object) {
             var options = object.options;
             var minX = 0;
             var maxX = this.canvas.width - options.width;
             var minY = 0;
-            var maxY = this.canvas.height - options.width;
+            var maxY = this.canvas.height - options.height;
 
             //getting mouse position correctly 
-            var bRect = this.canvas.getBoundingClientRect();
-            mouseX = (event.clientX - bRect.left) * (this.canvas.width / bRect.width);
-            mouseY = (event.clientY - bRect.top) * (this.canvas.height / bRect.height);
+            var mouseLocation = windowToCanvas(event, this.canvas);
 
             //clamp x and y positions to prevent object from dragging outside of canvas
-            posX = mouseX - this.dragHoldX;
+            posX = mouseLocation.x - dragHold.x;
             posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
-            posY = mouseY - this.dragHoldY;
+            posY = mouseLocation.y - dragHold.y;
             posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
 
             options.left = posX;
             options.top = posY;
+
             this.reDrawObjects();
-        } else if (!this.dragging) {
+        } else if (!dragging) {
             var object = getTargetObject(event, this.canvasObjects)
             if (object) {
                 this.canvas.style.cursor = 'move';
@@ -130,15 +128,22 @@ var app = (function(app) {
                 this.canvas.style.cursor = 'default';
             }
         }
-
     }
 
     function mouseUpListener(event) {
         this.canvas.addEventListener('mousedown', this, false);
         window.removeEventListener('mouseup', this, false);
-        if (this.dragging) {
-            this.dragging = false;
+        if (dragging) {
+            dragging = false;
             window.removeEventListener('mousemove', this, false);
+        }
+    }
+
+    function windowToCanvas(event, canvas) {
+        var bbox = canvas.getBoundingClientRect();
+        return {
+            x: event.clientX - bbox.left * (canvas.width / bbox.width),
+            y: event.clientY - bbox.top * (canvas.height / bbox.height)
         }
     }
 

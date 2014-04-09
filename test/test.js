@@ -39,7 +39,7 @@ var rect3 = new app.Rectangle({
 
 c1.draw(rect);
 c1.draw(rect2);
-c1.draw(rect3);
+c1.draw(text);
 
 
 // c1.draw(circle);
