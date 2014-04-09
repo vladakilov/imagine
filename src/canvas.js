@@ -7,6 +7,7 @@ var app = (function(app) {
         this.canvasObjects = [];
         this.activeObject;
         this.canvas.addEventListener('mousedown', this, false);
+        this.canvas.addEventListener('mousemove', this, false);
         this.dragging = false;
     }
 
@@ -67,16 +68,23 @@ var app = (function(app) {
             case 'mouseup':
                 mouseUpListener.apply(this, [event]);
                 break;
+            case 'mouseover':
+                mouseOverListener.apply(this, [event]);
+                break;
         }
     };
-
 
     function mouseDownListener(event) {
         var object = getTargetObject(event, this.canvasObjects);
         this.dragging = object ? true : false;
 
-        if (object && this.dragging) {
+        if (object) {
             this.setActiveObject(object);
+            object.options.strokeWidth = 2;
+            object.options.strokeStyle ='red';
+        } 
+
+        if (object && this.dragging) {
             var bRect = this.canvas.getBoundingClientRect();
             mouseX = (event.clientX - bRect.left) * (this.canvas.width / bRect.width);
             mouseY = (event.clientY - bRect.top) * (this.canvas.height / bRect.height);
@@ -84,33 +92,45 @@ var app = (function(app) {
             this.dragHoldY = mouseY - object.options.top;
             window.addEventListener('mousemove', this, false);
         }
-
+        
+        this.reDrawObjects();
         this.canvas.removeEventListener('mousedown', this, false);
         window.addEventListener('mouseup', this, false);
     }
 
     function mouseMoveListener(event) {
         var object = this.getActiveObject();
-        var options = object.options;
-        var minX = 0;
-        var maxX = this.canvas.width - options.width;
-        var minY = 0;
-        var maxY = this.canvas.height - options.width;
 
-        //getting mouse position correctly 
-        var bRect = this.canvas.getBoundingClientRect();
-        mouseX = (event.clientX - bRect.left) * (this.canvas.width / bRect.width);
-        mouseY = (event.clientY - bRect.top) * (this.canvas.height / bRect.height);
+        if (this.dragging && object) {
+            var options = object.options;
+            var minX = 0;
+            var maxX = this.canvas.width - options.width;
+            var minY = 0;
+            var maxY = this.canvas.height - options.width;
 
-        //clamp x and y positions to prevent object from dragging outside of canvas
-        posX = mouseX - this.dragHoldX;
-        posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
-        posY = mouseY - this.dragHoldY;
-        posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
+            //getting mouse position correctly 
+            var bRect = this.canvas.getBoundingClientRect();
+            mouseX = (event.clientX - bRect.left) * (this.canvas.width / bRect.width);
+            mouseY = (event.clientY - bRect.top) * (this.canvas.height / bRect.height);
 
-        options.left = posX;
-        options.top = posY;
-        this.reDrawObjects();
+            //clamp x and y positions to prevent object from dragging outside of canvas
+            posX = mouseX - this.dragHoldX;
+            posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
+            posY = mouseY - this.dragHoldY;
+            posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
+
+            options.left = posX;
+            options.top = posY;
+            this.reDrawObjects();
+        } else if (!this.dragging) {
+            var object = getTargetObject(event, this.canvasObjects)
+            if (object) {
+                this.canvas.style.cursor = 'move';
+            } else {
+                this.canvas.style.cursor = 'default';
+            }
+        }
+
     }
 
     function mouseUpListener(event) {
