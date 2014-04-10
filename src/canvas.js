@@ -7,10 +7,10 @@ var app = (function(app) {
         this.id = id;
         this.canvas = document.getElementById(this.id);
         this.ctx = this.canvas.getContext('2d');
-        this.canvasObjects = [];
-        this.activeObject;
         this.canvas.addEventListener('mousedown', this, false);
         this.canvas.addEventListener('mousemove', this, false);
+        this.canvasObjects = [];
+        this.activeObject;
     }
 
     Canvas.prototype.getCanvasId = function() {
@@ -37,9 +37,12 @@ var app = (function(app) {
         return this.activeObject = object;
     };
 
-    Canvas.prototype.removeCanvasObject = function(index) {
-        this.canvasObjects.splice(index, 1);
-        this.reDrawObjects();
+    Canvas.prototype.remove = function(object) {
+        var index = this.canvasObjects.indexOf(object);
+        if (index != -1) {
+            this.canvasObjects.splice(index, 1);
+            this.reDrawObjects();
+        }
     }
 
     Canvas.prototype.draw = function(object) {
@@ -47,7 +50,6 @@ var app = (function(app) {
         object.options.layer = this.getObjectCount() + 1;
         this.canvasObjects.push(object);
     };
-
 
     Canvas.prototype.reDrawObjects = function() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -80,9 +82,6 @@ var app = (function(app) {
 
         if (object) {
             this.setActiveObject(object);
-            console.log(object)
-            object.options.strokeWidth = 2;
-            object.options.strokeStyle = 'red';
         }
 
         if (object && dragging) {
@@ -92,9 +91,10 @@ var app = (function(app) {
             window.addEventListener('mousemove', this, false);
         }
 
-        this.reDrawObjects();
         this.canvas.removeEventListener('mousedown', this, false);
         window.addEventListener('mouseup', this, false);
+
+        this.reDrawObjects();
     }
 
     function mouseMoveListener(event) {
@@ -102,32 +102,18 @@ var app = (function(app) {
 
         if (dragging && object) {
             var options = object.options;
-            var minX = 0;
-            var maxX = this.canvas.width - options.width;
-            var minY = 0;
-            var maxY = this.canvas.height - options.height;
-
-            //getting mouse position correctly 
             var mouseLocation = windowToCanvas(event, this.canvas);
+            var position = clampToCanvas(mouseLocation, object, this.canvas);
 
-            //clamp x and y positions to prevent object from dragging outside of canvas
-            posX = mouseLocation.x - dragHold.x;
-            posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
-            posY = mouseLocation.y - dragHold.y;
-            posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
+            options.left = position.x;
+            options.top = position.y;
 
-            options.left = posX;
-            options.top = posY;
-
-            this.reDrawObjects();
         } else if (!dragging) {
-            var object = getTargetObject(event, this.canvasObjects)
-            if (object) {
-                this.canvas.style.cursor = 'move';
-            } else {
-                this.canvas.style.cursor = 'default';
-            }
+            var object = getTargetObject(event, this.canvasObjects);
+            this.canvas.style.cursor = (object) ? 'move' : 'default';
         }
+
+        this.reDrawObjects();
     }
 
     function mouseUpListener(event) {
@@ -139,6 +125,31 @@ var app = (function(app) {
         }
     }
 
+    function clampToCanvas(mouseLocation, object, canvas) {
+        var options = object.options,
+            minX = 0,
+            minY = 0,
+            maxX = canvas.width - options.width,
+            maxY = canvas.height - options.height,
+            posX, posY;
+
+        posX = mouseLocation.x - dragHold.x;
+        posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
+        posY = mouseLocation.y - dragHold.y;
+        posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
+
+        return {
+            x: posX,
+            y: posY
+        }
+    }
+
+    /**
+     * Translate mouse coordinates from window to the canvas
+     * @param {Object} event Object containing event
+     * @param {DOM Element} Canvas element
+     * @return {Object} Object with x,y coordinates
+     */
     function windowToCanvas(event, canvas) {
         var bbox = canvas.getBoundingClientRect();
         return {
@@ -146,14 +157,6 @@ var app = (function(app) {
             y: event.clientY - bbox.top * (canvas.height / bbox.height)
         }
     }
-
-    function mouseCoords(event, canvas) {
-        var rect = canvas.getBoundingClientRect();
-        return {
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top
-        };
-    };
 
     function isTargetHit(shape, coordinates) {
         var options = shape.options;
@@ -163,17 +166,18 @@ var app = (function(app) {
 
     function getTargetObject(coordinates, canvasObjects) {
         var highestLayer = -1;
-        var ret = false;
+        var newIndex;
+
         for (index in canvasObjects) {
             var shape = canvasObjects[index];
             var isHit = isTargetHit(shape, coordinates);
 
             if (isHit && (index > highestLayer)) {
-                ret = index;
+                newIndex = index;
             }
         }
 
-        return ret ? canvasObjects[ret] : ret;
+        return newIndex ? canvasObjects[newIndex] : false;
     }
 
     return {

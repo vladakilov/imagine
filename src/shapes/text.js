@@ -9,7 +9,7 @@
         fill: 'black',
         width: 100,
         height: 200,
-        strokeStyle: 'rgba(255,255,255,0)',
+        strokeStyle: null,
         strokeWidth: null
     };
 
