@@ -83,8 +83,8 @@ define(['shapes/shape'], function(shape) {
     }
 
     function mouseDownListener(event) {
-        var object = getTargetObject(event, this.canvasObjects);
         var coordinates = windowToCanvas(event, this.canvas);
+        var object = getTargetObject(coordinates, this.canvasObjects);
         dragging = object ? true : false;
 
         if (object) {

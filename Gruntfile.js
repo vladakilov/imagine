@@ -7,14 +7,6 @@ module.exports = function(grunt) {
             'dist'
         ],
 
-        concat: {
-            basic_and_extras: {
-                files: {
-                    'dist/main.js': 'src/**/*.js'
-                }
-            }
-        },
-
         qunit: {
             all: ['test/**/*.html']
         },
@@ -22,7 +14,7 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    name: 'app',
+                    name: 'main',
                     baseUrl: 'src',
                     include: ['../bower_components/almond/almond.js'],
                     out: 'dist/main.min.js'
@@ -45,7 +37,6 @@ module.exports = function(grunt) {
     // Define your tasks here
     grunt.registerTask('default', [
         'qunit',
-        'concat',
         'requirejs'
     ]);
 
