@@ -1,1 +1,1 @@
-Lightweight HTML5 Canvas Library
+Lightweight HTML5 Canvas Library [![Build Status](https://travis-ci.org/vladakilov/canvas.svg?branch=master)](https://travis-ci.org/vladakilov/canvas)
