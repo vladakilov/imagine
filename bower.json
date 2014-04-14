@@ -1,0 +1,20 @@
+{
+    "name": "canvas",
+    "version": "0.0.1",
+    "authors": [
+        "Vlad Akilov <vlad.akilov@gmail.com>"
+    ],
+    "description": "Lightweight HTML5 Canvas library",
+    "main": "app.js",
+    "keywords": [
+        "HTML5", "canvas"
+    ],
+    "license": "MIT",
+    "homepage": "github.com/vladakilov/canvas",
+    "dependencies": {
+        "requirejs": "~2.1.11",
+        "almond": "~0.2.9",
+        "qunit": "~1.14.0",
+        "blanket": "~1.1.5"
+    }
+}

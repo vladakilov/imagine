@@ -1,4 +1,4 @@
-(function(app) {
+define(['shapes/shape'], function(Shape) {
     var defaultOptions = {
         left: 0,
         top: 0,
@@ -10,7 +10,7 @@
         this.initializeOptions(defaultOptions, options);
     }
 
-    Circle.prototype = new app.Shape();
+    Circle.prototype = new Shape();
 
     Circle.prototype.draw = function(ctx) {
         ctx.beginPath();
@@ -22,5 +22,5 @@
         }
     };
 
-    app.Circle = Circle;
-}(window.app = window.app || {}));
+    return Circle;
+});

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>QUnit Tests</title>
-    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css">
+    <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css">
 </head>
 <body>
     <div id="qunit"></div>
@@ -12,15 +12,10 @@
         <canvas id="canvas2" width="400" height="400"></canvas>
     </div>
 
-    <script src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
-
-    <script src="../src/canvas.js"></script>
-    <script src="../src/shapes/shape.js"></script>
-    <script src="../src/shapes/circle.js"></script>
-    <script src="../src/shapes/rectangle.js"></script>
-    <script src="../src/shapes/text.js"></script>
-    <script src="../src/shapes/image.js"></script>
-
-    <script src="test.js"></script>
+    <script src="../bower_components/qunit/qunit/qunit.js"></script>
+    <script>
+    QUnit.config.autostart = false;
+    </script>
+    <script src="../bower_components/requirejs/require.js" data-main="test"></script>
 </body>
 </html>

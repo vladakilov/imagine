@@ -1,4 +1,4 @@
-(function(app) {
+define([], function() {
 
     /**
      * Shape class
@@ -30,6 +30,6 @@
         }
     };
 
-    app.Shape = Shape;
+    return Shape;
 
-}(window.app = window.app || {}));
+});

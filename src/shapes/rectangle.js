@@ -1,4 +1,4 @@
-(function(app) {
+define(['shapes/shape'], function(Shape) {
     var defaultOptions = {
         left: 0,
         top: 0,
@@ -13,7 +13,7 @@
         this.initializeOptions(defaultOptions, options);
     }
 
-    Rectangle.prototype = new app.Shape();
+    Rectangle.prototype = new Shape();
 
     Rectangle.prototype.draw = function(ctx) {
         ctx.fillStyle = this.options.fill;
@@ -25,5 +25,5 @@
         }
     }
 
-    app.Rectangle = Rectangle;
-}(window.app = window.app || {}));
+    return Rectangle;
+});

@@ -1,4 +1,4 @@
-(function(app) {
+define(['shapes/shape'], function(Shape) {
     var defaultOptions = {
         left: 0,
         top: 0,
@@ -11,11 +11,11 @@
         this.initializeOptions(defaultOptions, options);
     }
 
-    Img.prototype = new app.Shape();
+    Img.prototype = new Shape();
 
     Img.prototype.draw = function(ctx) {
         ctx.drawImage(this.imageObj, this.options.left, this.options.top);
     };
 
-    app.Image = Img;
-}(window.app = window.app || {}));
+    return Img;
+});

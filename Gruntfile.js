@@ -18,15 +18,7 @@ module.exports = function(grunt) {
         concat: {
             basic_and_extras: {
                 files: {
-                    'dist/canvas.js': 'src/**/*.js'
-                }
-            }
-        },
-
-        uglify: {
-            my_target: {
-                files: {
-                    'dist/canvas.min.js': 'src/**/*.js'
+                    'dist/main.js': 'src/**/*.js'
                 }
             }
         },
@@ -39,12 +31,24 @@ module.exports = function(grunt) {
                     ]
                 }
             }
+        },
+
+        requirejs: {
+            compile: {
+                options: {
+                    name: 'app',
+                    baseUrl: 'src',
+                    include: ['../bower_components/almond/almond.js'],
+                    out: 'dist/main.min.js'
+                }
+            }
         }
 
     });
 
     // Load plugins here
     grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -57,7 +61,7 @@ module.exports = function(grunt) {
         'connect',
         'qunit',
         'concat',
-        'uglify'
+        'requirejs'
     ]);
 
     grunt.registerTask('test', [

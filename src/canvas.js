@@ -1,4 +1,4 @@
-var app = (function(app) {
+define(['shapes/shape'], function(shape) {
 
     var dragging,
         dragHold = {};
@@ -201,7 +201,6 @@ var app = (function(app) {
         return newIndex ? canvasObjects[newIndex] : false;
     }
 
-    return {
-        Canvas: Canvas
-    }
-}(window.app = window.app || {}));
+    return Canvas;
+
+});

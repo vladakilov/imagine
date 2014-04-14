@@ -1,4 +1,4 @@
-(function(app) {
+define(['shapes/shape'], function(Shape) {
     var defaultOptions = {
         font: '24pt Times New Roman',
         fontWeight: 'normal',
@@ -17,7 +17,7 @@
         this.initializeOptions(defaultOptions, options);
     }
 
-    Text.prototype = new app.Shape();
+    Text.prototype = new Shape();
 
     Text.prototype.draw = function(ctx) {
         ctx.font = this.options.font;
@@ -29,5 +29,5 @@
         }
     };
 
-    app.Text = Text;
-}(window.app = window.app || {}));
+    return Text;
+});

@@ -1,0 +1,1 @@
+Lightweight HTML5 Canvas Library
