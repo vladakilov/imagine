@@ -7,14 +7,6 @@ module.exports = function(grunt) {
             'dist'
         ],
 
-        connect: {
-            server: {
-                options: {
-                    port: 9000
-                }
-            }
-        },
-
         concat: {
             basic_and_extras: {
                 files: {
@@ -24,13 +16,7 @@ module.exports = function(grunt) {
         },
 
         qunit: {
-            all: {
-                options: {
-                    urls: [
-                        'test/qunit.html'
-                    ]
-                }
-            }
+            all: ['test/**/*.html']
         },
 
         requirejs: {
@@ -58,14 +44,12 @@ module.exports = function(grunt) {
 
     // Define your tasks here
     grunt.registerTask('default', [
-        'connect',
         'qunit',
         'concat',
         'requirejs'
     ]);
 
     grunt.registerTask('test', [
-        'connect',
         'qunit'
     ]);
 
