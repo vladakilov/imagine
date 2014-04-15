@@ -1,4 +1,4 @@
-define(['shapes/shape'], function(shape) {
+define(['pubsub'], function(pubsub) {
 
     var dragging,
         dragHold = {};
@@ -89,6 +89,10 @@ define(['shapes/shape'], function(shape) {
 
         if (object) {
             this.setActiveObject(object);
+            pubsub.publish.mouseDown({
+                event: event,
+                object: object
+            });
         }
 
         if (object && dragging) {
@@ -108,6 +112,10 @@ define(['shapes/shape'], function(shape) {
         var coordinates = windowToCanvas(event, this.canvas);
 
         if (dragging && object) {
+            pubsub.publish.objectDrag({
+                event: event,
+                object: object
+            });
             var options = object.options;
             var position = clampToCanvas(coordinates, object, this.canvas);
 
@@ -119,6 +127,13 @@ define(['shapes/shape'], function(shape) {
             var object = getTargetObject(coordinates, this.canvasObjects);
             this.setActiveObject(object);
             this.setCursorOnActiveObject(object);
+            
+            if (object) {
+                pubsub.publish.objectHover({
+                    event: event,
+                    object: object
+                });
+            }
         }
 
         this.reDrawObjects();

@@ -1,8 +1,8 @@
-define([], function() {
+define(['pubsub'], function(pubsub) {
 
     /**
      * Shape class
-     * @class app.Shape
+     * @class Shape
      */
     function Shape() {}
 
@@ -10,7 +10,7 @@ define([], function() {
      * Constructor
      * @param {Object} [defaultOptions] Object containing default options for shape
      * @param {Object} [options] Object containing options that override defaultOptions.
-     * @return {app.Shape} thisArg
+     * @return {Shape} thisArg
      */
     Shape.prototype.initializeOptions = function(defaultOptions, options) {
         this.options = options || {};
@@ -28,6 +28,42 @@ define([], function() {
         for (option in options) {
             this.options[option] = options[option];
         }
+    };
+
+    Shape.prototype.on = function(eventType, callback) {
+        var _this = this;
+
+        switch (eventType) {
+            case "mousedown":
+                pubsub.subscribe.mouseDown(function(eventType, object) {
+                    if (JSON.stringify(_this) === JSON.stringify(object.object) && callback) {
+                        callback(eventType, object);
+                    }
+                });
+                break;
+            case "objectdrag":
+                pubsub.subscribe.objectDrag(function(eventType, object) {
+                    if (JSON.stringify(_this) === JSON.stringify(object.object) && callback) {
+                        callback(eventType, object);
+                    }
+                });
+                break;
+            case "objecthover":
+                pubsub.subscribe.objectHover(function(eventType, object) {
+                    if (JSON.stringify(_this) === JSON.stringify(object.object) && callback) {
+                        callback(eventType, object);
+                    }
+                });
+                break;
+            case "mouseup":
+                pubsub.subscribe.mouseUp(function(eventType, object) {
+                    if (JSON.stringify(_this) === JSON.stringify(object.object) && callback) {
+                        callback(eventType, object);
+                    }
+                });
+                break;
+        }
+
     };
 
     return Shape;

@@ -8,7 +8,7 @@ require(['app'], function(app) {
     var c1 = new app.Canvas('canvas1');
     var c2 = new app.Canvas('canvas2');
 
-    var rect = new app.Rectangle();
+    var rect = new app.Rectangle({top:200});
     var circle = new app.Circle({
         width: 200,
         height: 175
@@ -47,6 +47,13 @@ require(['app'], function(app) {
 
     c1.draw(circle);
     c1.draw(rect2);
+
+    c1.draw(rect);
+
+    rect.on('objecthover', function(originalEvent, object){
+        console.log(originalEvent);
+        console.log(object);
+    });
     // c1.draw(text);
 
 
