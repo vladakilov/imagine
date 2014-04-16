@@ -79,8 +79,23 @@ define(['app'], function(app) {
     });
 
     test('Add rectangle to canvas', function() {
-        canvas1.draw(rectangleDefault);
+        canvas1.add(rectangleDefault);
         strictEqual(canvas1.getObjectCount(), 1, 'There is 1 rectangle object on the canvas');
+    });
+
+    test('Update rectangle on canvas', function() {
+        var customRectangle = {
+            left: 34,
+            top: 300,
+            fill: 'green',
+            width: 43,
+            height: 340,
+            strokeStyle: 'blue',
+            strokeWidth: '3px',
+            layer: 1
+        };
+        rectangleDefault.set(customRectangle);
+        deepEqual(rectangleDefault.options, customRectangle, 'Rectangle updated with correct options');
     });
 
     test('Remove rectangle from canvas', function() {
@@ -89,8 +104,22 @@ define(['app'], function(app) {
     });
 
     test('Add circle to canvas', function() {
-        canvas1.draw(circleDefault);
+        canvas1.add(circleDefault);
         strictEqual(canvas1.getObjectCount(), 1, 'There is 1 circle object on the canvas');
+    });
+
+    test('Update circle on canvas', function() {
+        var customCircle = {
+            left: 200,
+            top: 23,
+            fill: 'brown',
+            radius: 40,
+            width: 90,
+            height: 120,
+            layer: 1
+        };
+        circleDefault.set(customCircle);
+        deepEqual(circleDefault.options, customCircle, 'Circle updated with correct options');
     });
 
     test('Remove circle from canvas', function() {
@@ -99,9 +128,47 @@ define(['app'], function(app) {
     });
 
     test('Add text to canvas', function() {
-        canvas1.draw(textDefault);
+        canvas1.add(textDefault);
         strictEqual(canvas1.getObjectCount(), 1, 'There is 1 text object on the canvas');
     });
+
+    test('Update text on canvas', function() {
+        var customText = {
+            font: '64px Calibri',
+            fontWeight: 'bold',
+            text: 'text',
+            left: 100,
+            top: 0,
+            baseline: 'top',
+            fill: 'orange',
+            width: 125,
+            height: 90,
+            strokeStyle: 'purple',
+            strokeWidth: '5px',
+            layer: 1
+        };
+        textDefault.set(customText);
+        deepEqual(textDefault.options, customText, 'Text updated with correct options');
+    });
+
+    // test('Text', function() {
+    //     var customText = {
+    //         font: '64px Calibri',
+    //         fontWeight: 'bold',
+    //         text: 'text',
+    //         left: 100,
+    //         top: 0,
+    //         baseline: 'top',
+    //         fill: 'orange',
+    //         width: 125,
+    //         height: 90,
+    //         strokeStyle: 'purple',
+    //         strokeWidth: '5px',
+    //         layer: 1
+    //     };
+    //     textDefault.set(customText);
+    //     deepEqual(textDefault.options, customText, 'Text updated with correct options');
+    // });
 
     test('Remove text from canvas', function() {
         canvas1.remove(textDefault);

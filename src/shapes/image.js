@@ -8,13 +8,15 @@ define(['shapes/shape'], function(Shape) {
 
     function Img(imageObj, options) {
         this.imageObj = imageObj;
+        options.width = options.width || this.imageObj.width;
+        options.height = options.height || this.imageObj.height;
         this.initializeOptions(defaultOptions, options);
     }
 
     Img.prototype = new Shape();
 
     Img.prototype.draw = function(ctx) {
-        ctx.drawImage(this.imageObj, this.options.left, this.options.top);
+        ctx.drawImage(this.imageObj, this.options.left, this.options.top, this.options.width, this.options.height);
     };
 
     return Img;

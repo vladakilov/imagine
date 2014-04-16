@@ -9,57 +9,32 @@ require(['app'], function(app) {
     var c2 = new app.Canvas('canvas2');
 
     var rect = new app.Rectangle({top:200});
-    var circle = new app.Circle({
-        width: 200,
-        height: 175
-    });
-    // var text = new app.Text({
-    //     text: 'asdfasf'
-    // });
-
-    // var imageObj = new Image();
-    // imageObj.src = 'darth-vader.jpg';
-    // imageObj.addEventListener('load', function() {
-    //     img = new app.Image(imageObj, {
-    //         left: 30,
-    //         top: 0,
-    //         angle: 0,
-    //         opacity: .5
-    //     });
-    //     c1.draw(img);
-    // }, false);
-
-    var rect2 = new app.Rectangle({
-        left: 200,
-        top: 50,
-        fill: 'black',
-        width: 100,
-        height: 100
+    var circle = new app.Circle();
+    var text = new app.Text({
+        top:200,
+        left: 150,
+        text: 'canvas'
     });
 
-    var rect3 = new app.Rectangle({
-        left: 130,
-        top: 150,
-        fill: 'green',
-        width: 100,
-        height: 100
+    var imageObj = new Image();
+    imageObj.src = 'html5_logo.png';
+    imageObj.addEventListener('load', function() {
+        img = new app.Image(imageObj, {
+            left: 30,
+            top: 0,
+            angle: 0,
+            opacity: .5,
+            width: 128,
+            height: 128
+        });
+        c1.add(img);
+    }, false);
+
+
+    c1.add(circle);
+    c1.add(rect);
+    c1.add(text);
+    rect.on('mousedown', function(eventType, object){
+        console.log(eventType, object)
     });
-
-    c1.draw(circle);
-    c1.draw(rect2);
-
-    c1.draw(rect);
-
-    rect.on('mousedown', function(originalEvent, object){
-        console.log('asdf')
-    });
-
-    circle.on('mouseup', function(){
-        console.log('asf')
-    })
-    // c1.draw(text);
-
-
-    // c1.draw(circle);
-    // c1.draw(text);
 });

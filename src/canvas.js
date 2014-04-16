@@ -47,7 +47,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         return this;
     }
 
-    Canvas.prototype.draw = function(object) {
+    Canvas.prototype.add = function(object) {
         object.draw(this.ctx);
         object.options.layer = this.getObjectCount() + 1;
         this.canvasObjects.push(object);
@@ -91,7 +91,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
 
         if (object) {
             this.setActiveObject(object);
-            pubsub.publish.mouseDown({
+            pubsub.publish('mousedown', {
                 event: event,
                 object: object
             });
@@ -117,7 +117,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
             options.left = position.x;
             options.top = position.y;
 
-            pubsub.publish.objectDrag({
+            pubsub.publish('objectdrag', {
                 event: event,
                 object: object
             });
@@ -129,7 +129,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
             this.setCursorOnActiveObject(object);
 
             if (object) {
-                pubsub.publish.objectHover({
+                pubsub.publish('objecthover', {
                     event: event,
                     object: object
                 });
@@ -151,7 +151,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
 
 
         if (object) {
-            pubsub.publish.mouseUp({
+            pubsub.publish('mouseup', {
                 event: event,
                 object: object
             });
