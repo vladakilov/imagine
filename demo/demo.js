@@ -50,10 +50,13 @@ require(['app'], function(app) {
 
     c1.draw(rect);
 
-    rect.on('objecthover', function(originalEvent, object){
-        console.log(originalEvent);
-        console.log(object);
+    rect.on('mousedown', function(originalEvent, object){
+        console.log('asdf')
     });
+
+    circle.on('mouseup', function(){
+        console.log('asf')
+    })
     // c1.draw(text);
 
 

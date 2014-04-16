@@ -35,30 +35,30 @@ define(['pubsub'], function(pubsub) {
 
         switch (eventType) {
             case "mousedown":
-                pubsub.subscribe.mouseDown(function(eventType, object) {
-                    if (JSON.stringify(_this) === JSON.stringify(object.object) && callback) {
-                        callback(eventType, object);
+                pubsub.subscribe.mouseDown(function(eventType, data) {
+                    if (JSON.stringify(_this) === JSON.stringify(data.object) && callback) {
+                        callback(eventType, data);
                     }
                 });
                 break;
             case "objectdrag":
-                pubsub.subscribe.objectDrag(function(eventType, object) {
-                    if (JSON.stringify(_this) === JSON.stringify(object.object) && callback) {
-                        callback(eventType, object);
+                pubsub.subscribe.objectDrag(function(eventType, data) {
+                    if (JSON.stringify(_this) === JSON.stringify(data.object) && callback) {
+                        callback(eventType, data);
                     }
                 });
                 break;
             case "objecthover":
-                pubsub.subscribe.objectHover(function(eventType, object) {
-                    if (JSON.stringify(_this) === JSON.stringify(object.object) && callback) {
-                        callback(eventType, object);
+                pubsub.subscribe.objectHover(function(eventType, data) {
+                    if (JSON.stringify(_this) === JSON.stringify(data.object) && callback) {
+                        callback(eventType, data);
                     }
                 });
                 break;
             case "mouseup":
-                pubsub.subscribe.mouseUp(function(eventType, object) {
-                    if (JSON.stringify(_this) === JSON.stringify(object.object) && callback) {
-                        callback(eventType, object);
+                pubsub.subscribe.mouseUp(function(eventType, data) {
+                    if (JSON.stringify(_this) === JSON.stringify(data.object) && callback) {
+                        callback(eventType, data);
                     }
                 });
                 break;

@@ -1,6 +1,6 @@
-define(['pubsub'], function(pubsub) {
+define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
 
-    var dragging,
+    var isDragging,
         dragHold = {};
 
     function Canvas(id) {
@@ -61,6 +61,10 @@ define(['pubsub'], function(pubsub) {
         }
     };
 
+    Canvas.prototype.setCursorOnActiveObject = function(object) {
+        this.canvas.style.cursor = (object) ? 'move' : 'default';
+    }
+
     Canvas.prototype.handleEvent = function(event) {
         switch (event.type) {
             case 'mousedown':
@@ -76,16 +80,14 @@ define(['pubsub'], function(pubsub) {
                 mouseOverListener.apply(this, [event]);
                 break;
         }
+
+        this.reDrawObjects();
     };
 
-    Canvas.prototype.setCursorOnActiveObject = function(object) {
-        this.canvas.style.cursor = (object) ? 'move' : 'default';
-    }
-
     function mouseDownListener(event) {
-        var coordinates = windowToCanvas(event, this.canvas);
-        var object = getTargetObject(coordinates, this.canvasObjects);
-        dragging = object ? true : false;
+        var coordinates = mouse.windowToCanvas(event, this.canvas);
+        var object = mouse.getTargetObject(coordinates, this.canvasObjects);
+        isDragging = object ? true : false;
 
         if (object) {
             this.setActiveObject(object);
@@ -95,7 +97,7 @@ define(['pubsub'], function(pubsub) {
             });
         }
 
-        if (object && dragging) {
+        if (object && isDragging) {
             dragHold.x = coordinates.x - object.options.left;
             dragHold.y = coordinates.y - object.options.top;
             window.addEventListener('mousemove', this, false);
@@ -103,31 +105,29 @@ define(['pubsub'], function(pubsub) {
 
         this.canvas.removeEventListener('mousedown', this, false);
         window.addEventListener('mouseup', this, false);
-
-        this.reDrawObjects();
     }
 
     function mouseMoveListener(event) {
         var object = this.getActiveObject();
-        var coordinates = windowToCanvas(event, this.canvas);
+        var coordinates = mouse.windowToCanvas(event, this.canvas);
 
-        if (dragging && object) {
+        if (isDragging && object) {
+            var options = object.options;
+            var position = mouse.clampToCanvas(coordinates, object, this.canvas, dragHold);
+            options.left = position.x;
+            options.top = position.y;
+
             pubsub.publish.objectDrag({
                 event: event,
                 object: object
             });
-            var options = object.options;
-            var position = clampToCanvas(coordinates, object, this.canvas);
-
-            options.left = position.x;
-            options.top = position.y;
         }
 
-        if (!dragging) {
-            var object = getTargetObject(coordinates, this.canvasObjects);
+        if (!isDragging) {
+            var object = mouse.getTargetObject(coordinates, this.canvasObjects);
             this.setActiveObject(object);
             this.setCursorOnActiveObject(object);
-            
+
             if (object) {
                 pubsub.publish.objectHover({
                     event: event,
@@ -135,85 +135,27 @@ define(['pubsub'], function(pubsub) {
                 });
             }
         }
-
-        this.reDrawObjects();
     }
 
     function mouseUpListener(event) {
+        var coordinates = mouse.windowToCanvas(event, this.canvas);
+        var object = mouse.getTargetObject(coordinates, this.canvasObjects);
+
+
         this.canvas.addEventListener('mousedown', this, false);
         window.removeEventListener('mouseup', this, false);
-        if (dragging) {
-            dragging = false;
+        if (isDragging) {
+            isDragging = false;
             window.removeEventListener('mousemove', this, false);
         }
-    }
 
-    /**
-     * Clamp x and y positions to prevent object from dragging outside of canvas
-     * @param {Object} coordinates x,y mouse coordinates
-     * @param {Ojbect} object - canvas Shape object
-     * @param {DOM Element} canvas - DOM element
-     * @return {Object} Object with x,y coordinates
-     */
-    function clampToCanvas(coordinates, object, canvas) {
-        var options = object.options,
-            minX = 0,
-            minY = 0,
-            maxX = canvas.width - options.width,
-            maxY = canvas.height - options.height,
-            posX, posY;
 
-        posX = coordinates.x - dragHold.x;
-        posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
-        posY = coordinates.y - dragHold.y;
-        posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
-
-        return {
-            x: posX,
-            y: posY
+        if (object) {
+            pubsub.publish.mouseUp({
+                event: event,
+                object: object
+            });
         }
-    }
-
-    /**
-     * Translate mouse coordinates from window to the canvas
-     * @param {Object} event - Object containing event
-     * @param {DOM Element} canvas - DOM element
-     * @return {Object} Object with x,y coordinates
-     */
-    function windowToCanvas(event, canvas) {
-        var bbox = canvas.getBoundingClientRect();
-        return {
-            x: event.clientX - bbox.left * (canvas.width / bbox.width),
-            y: event.clientY - bbox.top * (canvas.height / bbox.height)
-        }
-    }
-
-    /**
-     * Determine whether mouse is over a canvas object
-     * @param {Object} object - canvas Shape object
-     * @param {Object} coordinates - x,y mouse coordinates
-     * @return {Boolean} If mouse is over return true else false
-     */
-    function isTargetHit(object, coordinates) {
-        var options = object.options;
-        return ((options.left <= coordinates.x && coordinates.x <= (options.left + options.width)) &&
-            (options.top <= coordinates.y && coordinates.y <= (options.top + options.height)))
-    }
-
-    function getTargetObject(coordinates, canvasObjects) {
-        var highestLayer = -1;
-        var newIndex;
-
-        for (index in canvasObjects) {
-            var object = canvasObjects[index];
-            var isHit = isTargetHit(object, coordinates);
-
-            if (isHit && (index > highestLayer)) {
-                newIndex = index;
-            }
-        }
-
-        return newIndex ? canvasObjects[newIndex] : false;
     }
 
     return Canvas;
