@@ -1,7 +1,7 @@
 define(['canvas', 'shapes/rectangle', 'shapes/circle', 'shapes/image', 'shapes/text'], function(canvas, rectangle, circle, image, text) {
 
-    window.app = window.app || {};
-    app = {
+    window.imagine = window.imagine || {};
+    imagine = {
         Canvas: canvas,
         Rectangle: rectangle,
         Circle: circle,
@@ -9,6 +9,6 @@ define(['canvas', 'shapes/rectangle', 'shapes/circle', 'shapes/image', 'shapes/t
         Text: text
     };
 
-    return app;
+    return imagine;
 
 });

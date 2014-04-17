@@ -2,15 +2,15 @@ require.config({
     baseUrl: '../src'
 });
 
-require(['app'], function(app) {
+require(['imagine'], function(imagine) {
 
     // Testing
-    var c1 = new app.Canvas('canvas1');
-    var c2 = new app.Canvas('canvas2');
+    var c1 = new imagine.Canvas('canvas1');
+    var c2 = new imagine.Canvas('canvas2');
 
-    var rect = new app.Rectangle({top:200});
-    var circle = new app.Circle();
-    var text = new app.Text({
+    var rect = new imagine.Rectangle({top:200});
+    var circle = new imagine.Circle();
+    var text = new imagine.Text({
         top:200,
         left: 150,
         text: 'Sample Text'
@@ -19,7 +19,7 @@ require(['app'], function(app) {
     var imageObj = new Image();
     imageObj.src = 'html5_logo.png';
     imageObj.addEventListener('load', function() {
-        img = new app.Image(imageObj, {
+        img = new imagine.Image(imageObj, {
             left: 30,
             top: 0,
             angle: 0,

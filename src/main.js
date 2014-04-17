@@ -1,3 +1,3 @@
-require(['app'], function() {
+require(['imagine'], function() {
 
 });

@@ -1,16 +1,16 @@
 {
-    "name": "canvas",
+    "name": "imagine.js",
     "version": "0.0.1",
     "authors": [
         "Vlad Akilov <vlad.akilov@gmail.com>"
     ],
     "description": "Lightweight HTML5 Canvas library",
-    "main": "app.js",
+    "main": "imagine.js",
     "keywords": [
         "HTML5", "canvas"
     ],
     "license": "MIT",
-    "homepage": "github.com/vladakilov/canvas",
+    "homepage": "github.com/vladakilov/imagine",
     "dependencies": {
         "requirejs": "~2.1.11",
         "almond": "~0.2.9",

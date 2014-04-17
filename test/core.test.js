@@ -2,38 +2,38 @@ require.config({
     baseUrl: '../src'
 });
 
-define(['app'], function(app) {
+define(['imagine'], function(imagine) {
     var canvasId1 = 'canvas1'
-    var canvas1 = new app.Canvas(canvasId1);
+    var canvas1 = new imagine.Canvas(canvasId1);
 
     var canvasId2 = 'canvas2'
-    var canvas2 = new app.Canvas(canvasId2);
+    var canvas2 = new imagine.Canvas(canvasId2);
 
-    var rectangleDefault = new app.Rectangle();
-    var circleDefault = new app.Circle();
-    var textDefault = new app.Text();
+    var rectangleDefault = new imagine.Rectangle();
+    var circleDefault = new imagine.Circle();
+    var textDefault = new imagine.Text();
 
 
-    test('Initialize multiple app.Canvas instances', function() {
-        ok(canvas1 instanceof app.Canvas, 'canvas1 is instance of app.Canvas');
-        ok(canvas2 instanceof app.Canvas, 'canvas2 is instance of app.Canvas');
+    test('Initialize multiple imagine.Canvas instances', function() {
+        ok(canvas1 instanceof imagine.Canvas, 'canvas1 is instance of imagine.Canvas');
+        ok(canvas2 instanceof imagine.Canvas, 'canvas2 is instance of imagine.Canvas');
     });
 
-    test('Get canvas ID - app.Canvas.getCanvasId()', function() {
+    test('Get canvas ID - imagine.Canvas.getCanvasId()', function() {
         strictEqual(canvas1.getCanvasId(), canvasId1, 'Canvas ID 1 is correct');
         strictEqual(canvas2.getCanvasId(), canvasId2, 'Canvas ID 2 is correct');
     });
 
     test('Initialize shape object Rectangle', function() {
-        ok(rectangleDefault instanceof app.Rectangle, 'rectangleDefault is instance of app.Rectangle');
+        ok(rectangleDefault instanceof imagine.Rectangle, 'rectangleDefault is instance of imagine.Rectangle');
     });
 
     test('Initialize shape object Circle', function() {
-        ok(circleDefault instanceof app.Circle, 'circleDefault is instance of app.Circle');
+        ok(circleDefault instanceof imagine.Circle, 'circleDefault is instance of imagine.Circle');
     });
 
     test('Initialize shape object Text', function() {
-        ok(textDefault instanceof app.Text, 'textDefault is instance of app.Text');
+        ok(textDefault instanceof imagine.Text, 'textDefault is instance of imagine.Text');
     });
 
     test('Get options of Rectangle object', function() {

@@ -1,13 +1,13 @@
 {
-    "name": "Canvas",
+    "name": "imagine.js",
     "version": "0.0.1",
     "description": "Lightweight HTML5 Canvas library",
-    "homepage": "https://github.com/vladakilov/canvas",
-    "main": "canvas.js",
+    "homepage": "https://github.com/vladakilov/imagine",
+    "main": "imagine.js",
     "author": "Vlad Akilov <vlad.akilov@gmail.com>",
     "repository": {
         "type": "git",
-        "url": "git://github.com/vladakilov/canvas.git"
+        "url": "git://github.com/vladakilov/imagine.git"
     },
     "scripts": {
         "test": "grunt test"
