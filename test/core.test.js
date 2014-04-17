@@ -63,17 +63,16 @@ define(['app'], function(app) {
 
     test('Get options of Text object', function() {
         var defaultOptions = {
-            font: '24pt Times New Roman',
+            fontSize: 24,
+            font: 'Times New Roman',
             fontWeight: 'normal',
             text: 'text',
             left: 0,
             top: 0,
             baseline: 'top',
             fill: 'black',
-            width: 100,
-            height: 200,
             strokeStyle: null,
-            strokeWidth: null
+            strokeWidth: 0
         };
         deepEqual(defaultOptions, textDefault.options, 'Default objects are equal');
     });
@@ -134,7 +133,8 @@ define(['app'], function(app) {
 
     test('Update text on canvas', function() {
         var customText = {
-            font: '64px Calibri',
+            fontSize: 64,
+            font: 'Calibri',
             fontWeight: 'bold',
             text: 'text',
             left: 100,
@@ -150,25 +150,6 @@ define(['app'], function(app) {
         textDefault.set(customText);
         deepEqual(textDefault.options, customText, 'Text updated with correct options');
     });
-
-    // test('Text', function() {
-    //     var customText = {
-    //         font: '64px Calibri',
-    //         fontWeight: 'bold',
-    //         text: 'text',
-    //         left: 100,
-    //         top: 0,
-    //         baseline: 'top',
-    //         fill: 'orange',
-    //         width: 125,
-    //         height: 90,
-    //         strokeStyle: 'purple',
-    //         strokeWidth: '5px',
-    //         layer: 1
-    //     };
-    //     textDefault.set(customText);
-    //     deepEqual(textDefault.options, customText, 'Text updated with correct options');
-    // });
 
     test('Remove text from canvas', function() {
         canvas1.remove(textDefault);

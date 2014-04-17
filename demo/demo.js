@@ -13,7 +13,7 @@ require(['app'], function(app) {
     var text = new app.Text({
         top:200,
         left: 150,
-        text: 'canvas'
+        text: 'Sample Text'
     });
 
     var imageObj = new Image();
