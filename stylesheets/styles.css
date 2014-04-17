@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
 
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
 body {
   padding:50px;
   font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -181,6 +185,14 @@ footer {
   float:left;
   position:fixed;
   bottom:50px;
+}
+
+.example-code {
+  margin-bottom: 20px;
+}
+
+.canvas {
+  border: 1px solid #F2F2F2;
 }
 
 @media print, screen and (max-width: 960px) {

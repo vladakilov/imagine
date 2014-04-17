@@ -1,84 +1,169 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Canvas by vladakilov</title>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>Canvas by vladakilov</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Canvas</h1>
-        <p>Lightweight HTML5 Canvas Library</p>
+        <link rel="stylesheet" href="stylesheets/styles.css">
+        <link rel="stylesheet" href="stylesheets/prism.css">
+        <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+        <script src="javascripts/imagine.min.js" async="false"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>imagine.js</h1>
+                <p>Lightweight HTML5 Canvas Library</p>
 
-        <p class="view"><a href="https://github.com/vladakilov/canvas">View the Project on GitHub <small>vladakilov/canvas</small></a></p>
+                <p class="view"><a href="https://github.com/vladakilov/imagine">View the Project on GitHub <small>vladakilov/imagine</small></a></p>
 
+                <ul>
+                    <li><a href="https://github.com/vladakilov/imagine/zipball/master">Download <strong>ZIP File</strong></a></li>
+                    <li><a href="https://github.com/vladakilov/imagine/tarball/master">Download <strong>TAR Ball</strong></a></li>
+                    <li><a href="https://github.com/vladakilov/imagine">View On <strong>GitHub</strong></a></li>
+                </ul>
+            </header>
 
-        <ul>
-          <li><a href="https://github.com/vladakilov/canvas/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/vladakilov/canvas/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/vladakilov/canvas">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="lightweight-html5-canvas-library--" class="anchor" href="#lightweight-html5-canvas-library--"><span class="octicon octicon-link"></span></a>Lightweight HTML5 Canvas Library  <a href="https://travis-ci.org/vladakilov/canvas"><img src="https://travis-ci.org/vladakilov/canvas.svg?branch=master" alt="Build Status"></a>
-</h1>
+            <section>
+                <h1>
+                    <a name="lightweight-html5-canvas-library--" class="anchor" href="#lightweight-html5-canvas-library--"><span class="octicon octicon-link"></span></a>Lightweight HTML5 Canvas Library  <a href="https://travis-ci.org/vladakilov/imagine"><img src="https://travis-ci.org/vladakilov/imagine.svg?branch=master" alt="Build Status"></a>
+                </h1>
 
-<p>Add objects &amp; images to canvas.</p>
+                <ul>
+                    <li>Add objects &amp; images to canvas.</li>
+                    <li>Drag &amp; drop canvas elements including text, shapes, images and more.</li>
+                    <li>Event handling for canvas elements.</li>
+                    <li>Under 15KB minified, 4KB gzip.</li>
+                </ul>
 
-<ul>
-<li>Drag &amp; drop canvas elements including images.</li>
-<li>Event handling for canvas elements.</li>
-<li>Under 15KB minified, 4KB gzip.</li>
-</ul><h2>
-<a name="how-to-build" class="anchor" href="#how-to-build"><span class="octicon octicon-link"></span></a>How to build</h2>
+                <h2><a name="how-to-build" class="anchor" href="#how-to-build"><span class="octicon octicon-link"></span></a>How to build</h2>
 
-<p>You will need node installed as a development dependency. See
-<a href="http://nodejs.org/">node's site</a> for help with that.</p>
+                <p>You will need node installed as a development dependency. See <a href="http://nodejs.org/">node's site</a> for help with that.</p>
 
-<ol>
-<li><code>npm install -g grunt-cli</code></li>
-<li><code>npm install -g bower</code></li>
-<li><code>npm install</code></li>
-<li>
-<code>bower install</code> </li>
-<li>Build - <code>grunt</code> (To view all grunt tasks, open Gruntfile.js)</li>
-</ol><h2>
-<a name="example-use" class="anchor" href="#example-use"><span class="octicon octicon-link"></span></a>Example Use</h2>
+                <ol>
+                    <li><code>npm install -g grunt-cli</code></li>
+                    <li><code>npm install -g bower</code></li>
+                    <li><code>npm install</code></li>
+                    <li>
+                    <code>bower install</code> </li>
+                    <li>Build - <code>grunt</code> (To view all grunt tasks, open Gruntfile.js)</li>
+                </ol>
 
-<div class="highlight highlight-html"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-    <span class="nt">&lt;canvas</span> <span class="na">id=</span><span class="s">"canvas"</span> <span class="na">width=</span><span class="s">"300"</span> <span class="na">height=</span><span class="s">"300"</span><span class="nt">&gt;&lt;/canvas&gt;</span>
+                <h2><a name="example-use" class="anchor" href="#example-use"><span class="octicon octicon-link"></span></a>Example Use</h2>
 
-    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"canvas.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-    <span class="nt">&lt;script&gt;</span>
-        <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">app</span><span class="p">.</span><span class="nx">Canvas</span><span class="p">(</span><span class="s1">'canvas'</span><span class="p">);</span>
-        <span class="kd">var</span> <span class="nx">rect</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">app</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">();</span>
-        <span class="nx">canvas</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">rect</span><span class="p">);</span>
-    <span class="nt">&lt;/script&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</pre></div>
+                <div class="example-code">
+                    <h4><a name="add-rectangle-to-canvas" class="anchor" href="#add-rectangle-to-canvas"><span class="octicon octicon-link"></span></a>Add rectangle to canvas</h4>
+<pre><code class="language-javascript">var canvas = new imagine.Canvas('rect-canvas');
+var rect = new imagine.Rectangle();
+canvas.add(rect);</code></pre>
 
-<p></p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/vladakilov">vladakilov</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+                    <canvas id="rect-canvas" class="canvas" width="500" height="500"></canvas>
+                    <script>
+                        (function(){
+                            var canvas = new imagine.Canvas('rect-canvas');
+                            var rect = new imagine.Rectangle();
+                            canvas.add(rect);
+                        })();
+                    </script>
+                </div>
+
+                <div class="example-code">
+                    <h4><a name="add-circle-to-canvas" class="anchor" href="#add-circle-to-canvas"><span class="octicon octicon-link"></span></a>Add circle to canvas</h4>
+<pre><code class="language-javascript">var canvas = new imagine.Canvas('circle-canvas');
+var circle = new imagine.Circle();
+canvas.add(circle);</code></pre>
+
+                    <canvas id="circle-canvas" class="canvas" width="500" height="500"></canvas>
+                    <script>
+                        (function(){
+                            var canvas = new imagine.Canvas('circle-canvas');
+                            var circle = new imagine.Circle();
+                            canvas.add(circle);
+                        })();
+                    </script>
+                </div>
+
+                <div class="example-code">
+                    <h4><a name="add-image-to-canvas-and-center" class="anchor" href="#add-image-to-canvas-and-center"><span class="octicon octicon-link"></span></a>Add image to canvas and center</h4>
+<pre><code class="language-javascript">var canvas = new imagine.Canvas('image-canvas');
+var imageObj = new Image();
+var imageSize = 128;
+    imageObj.src = 'images/html5_logo.png';
+    imageObj.addEventListener('load', function() {
+        var img = new imagine.Image(imageObj, {
+            left: canvas.canvas.width/2 - imageSize/2,
+            top: canvas.canvas.height/2 - imageSize/2,
+            width: imageSize,
+            height: imageSize
+        });
+        canvas.add(img);
+    }, false);</code></pre>
+
+                    <canvas id="image-canvas" class="canvas" width="500" height="500"></canvas>
+                    <script>
+                        (function(){
+                            var canvas = new imagine.Canvas('image-canvas');
+                            var imageObj = new Image();
+                            var imageSize = 128;
+                                imageObj.src = 'images/html5_logo.png';
+                                imageObj.addEventListener('load', function() {
+                                    var img = new imagine.Image(imageObj, {
+                                        left: canvas.canvas.width/2 - imageSize/2,
+                                        top: canvas.canvas.height/2 - imageSize/2,
+                                        width: imageSize,
+                                        height: imageSize
+                                    });
+                                    canvas.add(img);
+                                }, false);
+                        })();
+                    </script>
+                </div>
+
+                <div class="example-code">
+                    <h4><a name="add-text-to-canvas" class="anchor" href="#add-text-to-canvas"><span class="octicon octicon-link"></span></a>Add text to canvas</h4>
+<pre><code class="language-javascript">var canvas = new imagine.Canvas('text-canvas');
+var text = new imagine.Text({
+    fontSize: 32,
+    font: 'Helvetica Neue',
+    left: 150,
+    top: 150,
+    text: 'Text Object',
+    fill: 'blue'
+});
+canvas.add(text);</code></pre>
+
+                    <canvas id="text-canvas" class="canvas" width="500" height="500"></canvas>
+                    <script>
+                        (function(){
+                            var canvas = new imagine.Canvas('text-canvas');
+                            var text = new imagine.Text({
+                                fontSize: 32,
+                                font: 'Helvetica Neue',
+                                left: 150,
+                                top: 150,
+                                text: 'Text Object',
+                                fill: 'blue'
+                            });
+                            canvas.add(text);
+                        })();
+                    </script>
+                </div>
+
+            </section>
+
+            <footer>
+                <p>This project is maintained by <a href="https://github.com/vladakilov">vladakilov</a></p>
+                <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+    
     </div>
     <script src="javascripts/scale.fix.js"></script>
+    <script src="javascripts/prism.js"></script>
     
   </body>
 </html>
