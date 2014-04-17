@@ -17,6 +17,10 @@ module.exports = function(grunt) {
                     name: 'main',
                     baseUrl: 'src',
                     include: ['../bower_components/almond/almond.js'],
+                    wrap: {
+                        startFile: 'src/_start.js',
+                        endFile: 'src/_end.js'
+                    },
                     out: 'dist/imagine.min.js'
                 }
             }
