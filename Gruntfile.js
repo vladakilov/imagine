@@ -14,13 +14,15 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    name: 'main',
+                    name: 'imagine',
                     baseUrl: 'src',
                     include: ['../bower_components/almond/almond.js'],
                     wrap: {
                         startFile: 'src/_start.js',
                         endFile: 'src/_end.js'
                     },
+                    optimize: 'uglify2',
+                    preserveLicenseComments: false,
                     out: 'dist/imagine.min.js'
                 }
             }
