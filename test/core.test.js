@@ -82,6 +82,22 @@ define(['imagine'], function(imagine) {
         strictEqual(canvas1.getObjectCount(), 1, 'There is 1 rectangle object on the canvas');
     });
 
+    test('Mouse down event on object', function() {
+        stop();
+
+        var isTriggered = false;
+        rectangleDefault.on('mousedown', function(eventType, object) {
+            isTriggered = true;
+        });
+
+        rectangleDefault.trigger('mousedown');
+
+        setTimeout(function() {
+            ok(isTriggered, 'Triggered mousedown event');
+            start();
+        }, 500);
+    });
+
     test('Update rectangle on canvas', function() {
         var customRectangle = {
             left: 34,

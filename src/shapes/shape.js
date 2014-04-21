@@ -17,10 +17,6 @@ define(['pubsub'], function(pubsub) {
 
         for (option in defaultOptions) {
             this.options[option] = this.options[option] || defaultOptions[option];
-            if (this.options.hasOwnProperty('radius')) {
-                this.options['width'] = this.options['width'] || this.options.radius * 2;
-                this.options['height'] = this.options['height'] || this.options.radius * 2;
-            }
         }
     };
 
@@ -37,6 +33,12 @@ define(['pubsub'], function(pubsub) {
             if ((_this === data.object) && callback) {
                 callback(eventType, data);
             }
+        });
+    };
+
+    Shape.prototype.trigger = function(eventType) {
+        pubsub.publish(eventType, {
+            object: this
         });
     };
 

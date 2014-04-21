@@ -8,7 +8,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         this.canvas = document.getElementById(this.id);
         this.ctx = this.canvas.getContext('2d');
         this.canvas.addEventListener('mousedown', this, false);
-        this.canvas.addEventListener('mousemove', this, false);
+        window.addEventListener('mousemove', this, false);
         this.canvasObjects = [];
         this.activeObject;
     }
@@ -36,6 +36,10 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
     Canvas.prototype.setActiveObject = function(object) {
         return this.activeObject = object;
     };
+
+    Canvas.prototype.toDataURL = function(mimetype) {
+        return this.canvas.toDataURL(mimetype);
+    }
 
     Canvas.prototype.remove = function(object) {
         var index = this.canvasObjects.indexOf(object);
@@ -89,6 +93,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         var object = mouse.getTargetObject(coordinates, this.canvasObjects);
         isDragging = object ? true : false;
 
+        // Click/Mousedown on object
         if (object) {
             this.setActiveObject(object);
             pubsub.publish('mousedown', {
@@ -97,12 +102,12 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
             });
         }
 
+        // Mousedown and begin dragging
         if (object && isDragging) {
             dragHold.x = coordinates.x - object.options.left;
             dragHold.y = coordinates.y - object.options.top;
             window.addEventListener('mousemove', this, false);
         }
-
         this.canvas.removeEventListener('mousedown', this, false);
         window.addEventListener('mouseup', this, false);
     }
@@ -111,6 +116,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         var object = this.getActiveObject();
         var coordinates = mouse.windowToCanvas(event, this.canvas);
 
+        // Dragging object
         if (isDragging && object) {
             var options = object.options;
             var position = mouse.clampToCanvas(coordinates, object, this.canvas, dragHold);
@@ -123,17 +129,26 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
             });
         }
 
+        // Hovering/mouseover object
         if (!isDragging) {
-            var object = mouse.getTargetObject(coordinates, this.canvasObjects);
-            this.setActiveObject(object);
-            this.setCursorOnActiveObject(object);
+            var newObject = mouse.getTargetObject(coordinates, this.canvasObjects);
+            this.setActiveObject(newObject);
+            this.setCursorOnActiveObject(newObject);
 
-            if (object) {
+            if (newObject) {
                 pubsub.publish('objecthover', {
                     event: event,
-                    object: object
+                    object: newObject
                 });
             }
+        }
+
+        // Mouseout of object
+        if (object && (object !== newObject) && !isDragging) {
+            pubsub.publish('mouseout', {
+                event: event,
+                object: object
+            });
         }
     }
 
@@ -141,15 +156,14 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         var coordinates = mouse.windowToCanvas(event, this.canvas);
         var object = mouse.getTargetObject(coordinates, this.canvasObjects);
 
-
+        // Dragging stopped
         this.canvas.addEventListener('mousedown', this, false);
         window.removeEventListener('mouseup', this, false);
         if (isDragging) {
             isDragging = false;
-            window.removeEventListener('mousemove', this, false);
         }
 
-
+        // Mouseup event on an object
         if (object) {
             pubsub.publish('mouseup', {
                 event: event,

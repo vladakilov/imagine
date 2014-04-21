@@ -8,6 +8,10 @@ define(['shapes/shape'], function(Shape) {
 
     function Circle(options) {
         this.initializeOptions(defaultOptions, options);
+        var width = this.options['width'] || this.options.radius * 2;
+        var height = this.options['height'] || this.options.radius * 2;
+        this.options['width'] = width;
+        this.options['height'] = height;
     }
 
     Circle.prototype = new Shape();
