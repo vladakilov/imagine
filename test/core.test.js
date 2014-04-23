@@ -3,10 +3,10 @@ require.config({
 });
 
 define(['imagine'], function(imagine) {
-    var canvasId1 = 'canvas1'
+    var canvasId1 = 'canvas1';
     var canvas1 = new imagine.Canvas(canvasId1);
 
-    var canvasId2 = 'canvas2'
+    var canvasId2 = 'canvas2';
     var canvas2 = new imagine.Canvas(canvasId2);
 
     var rectangleDefault = new imagine.Rectangle();
@@ -86,7 +86,7 @@ define(['imagine'], function(imagine) {
         stop();
 
         var isTriggered = false;
-        rectangleDefault.on('mousedown', function(eventType, object) {
+        rectangleDefault.on('mousedown', function() {
             isTriggered = true;
         });
 

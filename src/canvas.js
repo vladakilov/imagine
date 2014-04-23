@@ -10,7 +10,6 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         this.canvas.addEventListener('mousedown', this, false);
         window.addEventListener('mousemove', this, false);
         this.canvasObjects = [];
-        this.activeObject;
     }
 
     Canvas.prototype.getCanvasId = function() {
@@ -34,22 +33,22 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
     };
 
     Canvas.prototype.setActiveObject = function(object) {
-        return this.activeObject = object;
+        this.activeObject = object;
     };
 
     Canvas.prototype.toDataURL = function(mimetype) {
         return this.canvas.toDataURL(mimetype);
-    }
+    };
 
     Canvas.prototype.remove = function(object) {
         var index = this.canvasObjects.indexOf(object);
-        if (index != -1) {
+        if (index !== -1) {
             this.canvasObjects.splice(index, 1);
             this.reDrawObjects();
         }
 
         return this;
-    }
+    };
 
     Canvas.prototype.add = function(object) {
         object.draw(this.ctx);
@@ -59,7 +58,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
 
     Canvas.prototype.reDrawObjects = function() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        for (object in this.canvasObjects) {
+        for (var object in this.canvasObjects) {
             var obj = this.canvasObjects[object];
             obj.draw(this.ctx);
         }
@@ -67,7 +66,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
 
     Canvas.prototype.setCursorOnActiveObject = function(object) {
         this.canvas.style.cursor = (object) ? 'move' : 'default';
-    }
+    };
 
     Canvas.prototype.handleEvent = function(event) {
         switch (event.type) {
@@ -115,6 +114,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
     function mouseMoveListener(event) {
         var object = this.getActiveObject();
         var coordinates = mouse.windowToCanvas(event, this.canvas);
+        var newObject;
 
         // Dragging object
         if (isDragging && object) {
@@ -131,7 +131,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
 
         // Hovering/mouseover object
         if (!isDragging) {
-            var newObject = mouse.getTargetObject(coordinates, this.canvasObjects);
+            newObject = mouse.getTargetObject(coordinates, this.canvasObjects);
             this.setActiveObject(newObject);
             this.setCursorOnActiveObject(newObject);
 

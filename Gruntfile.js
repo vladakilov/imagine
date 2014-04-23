@@ -11,6 +11,23 @@ module.exports = function(grunt) {
             all: ['test/**/*.html']
         },
 
+        jshint: {
+            options: {
+                curly: true,
+                eqeqeq: true,
+                eqnull: true,
+                browser: true,
+                unused: true,
+            },
+            uses_defaults: [
+                'Gruntfile.js',
+                'src/**/*.js',
+                'test/**/*.js',
+                '!src/_start.js',
+                '!src/_end.js'
+            ]
+        },
+
         requirejs: {
             compile: {
                 options: {
@@ -42,11 +59,13 @@ module.exports = function(grunt) {
 
     // Define your tasks here
     grunt.registerTask('default', [
+        'jshint',
         'qunit',
         'requirejs'
     ]);
 
     grunt.registerTask('test', [
+        'jshint',
         'qunit'
     ]);
 

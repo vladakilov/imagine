@@ -26,7 +26,7 @@ define(['shapes/shape'], function(Shape) {
         var width = this.options.width || measure.width;
         var height = this.options.height || this.options.fontSize + 6;
         this.options.width = width;
-        this.options.height = height
+        this.options.height = height;
         ctx.fillText(this.options.text, this.options.left, this.options.top);
         if (this.options.strokeWidth) {
             ctx.strokeRect(this.options.left, this.options.top, this.options.width, this.options.height);

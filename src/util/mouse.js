@@ -11,7 +11,7 @@ define([], function() {
         return {
             x: event.clientX - bbox.left * (canvas.width / bbox.width),
             y: event.clientY - bbox.top * (canvas.height / bbox.height)
-        }
+        };
     }
 
     /**
@@ -37,7 +37,7 @@ define([], function() {
         return {
             x: posX,
             y: posY
-        }
+        };
     }
 
     /**
@@ -49,14 +49,14 @@ define([], function() {
     function isTargetHit(object, coordinates) {
         var options = object.options;
         return ((options.left <= coordinates.x && coordinates.x <= (options.left + options.width)) &&
-            (options.top <= coordinates.y && coordinates.y <= (options.top + options.height)))
+            (options.top <= coordinates.y && coordinates.y <= (options.top + options.height)));
     }
 
     function getTargetObject(coordinates, canvasObjects) {
         var highestLayer = -1;
         var newIndex;
 
-        for (index in canvasObjects) {
+        for (var index in canvasObjects) {
             var object = canvasObjects[index];
             var isHit = isTargetHit(object, coordinates);
 
@@ -73,6 +73,6 @@ define([], function() {
         clampToCanvas: clampToCanvas,
         isTargetHit: isTargetHit,
         getTargetObject: getTargetObject
-    }
+    };
 
 });

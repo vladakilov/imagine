@@ -15,13 +15,13 @@ define(['pubsub'], function(pubsub) {
     Shape.prototype.initializeOptions = function(defaultOptions, options) {
         this.options = options || {};
 
-        for (option in defaultOptions) {
+        for (var option in defaultOptions) {
             this.options[option] = this.options[option] || defaultOptions[option];
         }
     };
 
     Shape.prototype.set = function(options) {
-        for (option in options) {
+        for (var option in options) {
             this.options[option] = options[option];
         }
     };

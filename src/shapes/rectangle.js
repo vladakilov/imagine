@@ -23,7 +23,7 @@ define(['shapes/shape'], function(Shape) {
         if (this.options.strokeWidth) {
             ctx.strokeRect(this.options.left, this.options.top, this.options.width, this.options.height);
         }
-    }
+    };
 
     return Rectangle;
 });
