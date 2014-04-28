@@ -7,6 +7,7 @@ define(['shapes/shape'], function(Shape) {
     };
 
     function Img(imageObj, options) {
+        this.type = 'image';
         this.imageObj = imageObj;
         options.width = options.width || this.imageObj.width;
         options.height = options.height || this.imageObj.height;
@@ -17,6 +18,9 @@ define(['shapes/shape'], function(Shape) {
 
     Img.prototype.draw = function(ctx) {
         ctx.drawImage(this.imageObj, this.options.left, this.options.top, this.options.width, this.options.height);
+        if (this.isActive) {
+            this.drawBorder(ctx);
+        }
     };
 
     return Img;

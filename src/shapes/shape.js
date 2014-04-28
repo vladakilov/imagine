@@ -13,6 +13,7 @@ define(['pubsub'], function(pubsub) {
      * @return {Shape} thisArg
      */
     Shape.prototype.initializeOptions = function(defaultOptions, options) {
+        this.isActive = false;
         this.options = options || {};
 
         for (var option in defaultOptions) {
@@ -24,6 +25,20 @@ define(['pubsub'], function(pubsub) {
         for (var option in options) {
             this.options[option] = options[option];
         }
+    };
+
+    Shape.prototype.drawBorder = function(ctx) {
+        var borderWidth = 1;
+        ctx.save();
+        ctx.strokeStyle = 'blue';
+        ctx.lineWidth = borderWidth;
+        ctx.strokeRect(
+            this.options.left - (borderWidth/2),
+            this.options.top - (borderWidth/2),
+            this.options.width + borderWidth,
+            this.options.height + borderWidth
+        );
+        ctx.restore();
     };
 
     Shape.prototype.on = function(eventType, callback) {

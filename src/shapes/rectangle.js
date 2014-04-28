@@ -10,6 +10,7 @@ define(['shapes/shape'], function(Shape) {
     };
 
     function Rectangle(options) {
+        this.type = 'rectangle';
         this.initializeOptions(defaultOptions, options);
     }
 
@@ -22,6 +23,9 @@ define(['shapes/shape'], function(Shape) {
         ctx.lineWidth = this.options.strokeWidth;
         if (this.options.strokeWidth) {
             ctx.strokeRect(this.options.left, this.options.top, this.options.width, this.options.height);
+        }
+        if (this.isActive) {
+            this.drawBorder(ctx);
         }
     };
 

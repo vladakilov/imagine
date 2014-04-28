@@ -67,6 +67,7 @@ define(['imagine'], function(imagine) {
             font: 'Times New Roman',
             fontWeight: 'normal',
             text: 'text',
+            lineHeight: 1.3,
             left: 0,
             top: 0,
             baseline: 'top',
@@ -161,6 +162,7 @@ define(['imagine'], function(imagine) {
             height: 90,
             strokeStyle: 'purple',
             strokeWidth: '5px',
+            lineHeight: 1.3,
             layer: 1
         };
         textDefault.set(customText);

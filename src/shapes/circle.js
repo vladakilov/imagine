@@ -7,6 +7,7 @@ define(['shapes/shape'], function(Shape) {
     };
 
     function Circle(options) {
+        this.type = 'circle';
         this.initializeOptions(defaultOptions, options);
         var width = this.options.width || this.options.radius * 2;
         var height = this.options.height || this.options.radius * 2;
@@ -23,6 +24,9 @@ define(['shapes/shape'], function(Shape) {
         ctx.fill();
         if (this.options.strokeWidth) {
             ctx.strokeRect(this.options.left, this.options.top, this.options.width, this.options.height);
+        }
+        if (this.isActive) {
+            this.drawBorder(ctx);
         }
     };
 

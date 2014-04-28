@@ -36,6 +36,12 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         this.activeObject = object;
     };
 
+    Canvas.prototype.clearActiveObject = function() {
+        for (var obj in this.canvasObjects) {
+            this.canvasObjects[obj].isActive = false;
+        }
+    };
+
     Canvas.prototype.toDataURL = function(mimetype) {
         return this.canvas.toDataURL(mimetype);
     };
@@ -91,6 +97,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         var coordinates = mouse.windowToCanvas(event, this.canvas);
         var object = mouse.getTargetObject(coordinates, this.canvasObjects);
         isDragging = object ? true : false;
+        this.clearActiveObject();
 
         // Click/Mousedown on object
         if (object) {
@@ -99,6 +106,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
                 event: event,
                 object: object
             });
+            object.isActive = true;
         }
 
         // Mousedown and begin dragging
