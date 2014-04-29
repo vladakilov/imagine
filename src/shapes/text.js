@@ -39,6 +39,7 @@ define(['shapes/shape'], function(Shape) {
         }
         if (this.isActive) {
             this.drawBorder(ctx);
+            this.drawControls(ctx);
         }
     };
 

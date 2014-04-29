@@ -41,6 +41,45 @@ define(['pubsub'], function(pubsub) {
         ctx.restore();
     };
 
+    Shape.prototype.drawControls = function(ctx) {
+        var options = this.options;
+        var controlSize = 10;
+
+        var controls = {
+            tl: {
+                left: options.left - controlSize/2,
+                top: options.top - controlSize/2
+            },
+            tr: {
+                left: (options.left + options.width) - controlSize/2,
+                top: options.top - controlSize/2
+            },
+            br: {
+                left: (options.left + options.width) - controlSize/2,
+                top: (options.top + options.height) - controlSize/2
+            },
+            bl: {
+                left: options.left - controlSize/2,
+                top: (options.top + options.height) - controlSize/2
+            }
+        }
+
+        for (var control in controls) {
+            var c = controls[control];
+
+            ctx.save();
+            ctx.fillStyle = 'blue';
+            ctx.lineWidth = 1;
+            ctx.fillRect(
+                c.left,
+                c.top,
+                controlSize,
+                controlSize
+            );
+            ctx.restore();
+        }
+    };
+
     Shape.prototype.on = function(eventType, callback) {
         var _this = this;
 
