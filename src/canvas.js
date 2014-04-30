@@ -1,7 +1,4 @@
-define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
-
-    var isDragging,
-        dragHold = {};
+define(['events'], function(events) {
 
     function Canvas(id) {
         this.id = id;
@@ -77,108 +74,18 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
     Canvas.prototype.handleEvent = function(event) {
         switch (event.type) {
             case 'mousedown':
-                mouseDownListener.apply(this, [event]);
+                events.mouseDownListener.apply(this, [event]);
                 break;
             case 'mousemove':
-                mouseMoveListener.apply(this, [event]);
+                events.mouseMoveListener.apply(this, [event]);
                 break;
             case 'mouseup':
-                mouseUpListener.apply(this, [event]);
-                break;
-            case 'mouseover':
-                mouseOverListener.apply(this, [event]);
+                events.mouseUpListener.apply(this, [event]);
                 break;
         }
 
         this.reDrawObjects();
     };
-
-    function mouseDownListener(event) {
-        var coordinates = mouse.windowToCanvas(event, this.canvas);
-        var object = mouse.getTargetObject(coordinates, this.canvasObjects);
-        isDragging = object ? true : false;
-        this.clearActiveObject();
-
-        // Click/Mousedown on object
-        if (object) {
-            this.setActiveObject(object);
-            pubsub.publish('mousedown', {
-                event: event,
-                object: object
-            });
-            object.isActive = true;
-        }
-
-        // Mousedown and begin dragging
-        if (object && isDragging) {
-            dragHold.x = coordinates.x - object.options.left;
-            dragHold.y = coordinates.y - object.options.top;
-            window.addEventListener('mousemove', this, false);
-        }
-        this.canvas.removeEventListener('mousedown', this, false);
-        window.addEventListener('mouseup', this, false);
-    }
-
-    function mouseMoveListener(event) {
-        var object = this.getActiveObject();
-        var coordinates = mouse.windowToCanvas(event, this.canvas);
-        var newObject;
-
-        // Dragging object
-        if (isDragging && object) {
-            var options = object.options;
-            var position = mouse.clampToCanvas(coordinates, object, this.canvas, dragHold);
-            options.left = position.x;
-            options.top = position.y;
-
-            pubsub.publish('objectdrag', {
-                event: event,
-                object: object
-            });
-        }
-
-        // Hovering/mouseover object
-        if (!isDragging) {
-            newObject = mouse.getTargetObject(coordinates, this.canvasObjects);
-            this.setActiveObject(newObject);
-            this.setCursorOnActiveObject(newObject);
-
-            if (newObject) {
-                pubsub.publish('objecthover', {
-                    event: event,
-                    object: newObject
-                });
-            }
-        }
-
-        // Mouseout of object
-        if (object && (object !== newObject) && !isDragging) {
-            pubsub.publish('mouseout', {
-                event: event,
-                object: object
-            });
-        }
-    }
-
-    function mouseUpListener(event) {
-        var coordinates = mouse.windowToCanvas(event, this.canvas);
-        var object = mouse.getTargetObject(coordinates, this.canvasObjects);
-
-        // Dragging stopped
-        this.canvas.addEventListener('mousedown', this, false);
-        window.removeEventListener('mouseup', this, false);
-        if (isDragging) {
-            isDragging = false;
-        }
-
-        // Mouseup event on an object
-        if (object) {
-            pubsub.publish('mouseup', {
-                event: event,
-                object: object
-            });
-        }
-    }
 
     return Canvas;
 
