@@ -6,6 +6,7 @@ Lightweight HTML5 Canvas Library - [imagine.js Demo](http://vladakilov.github.io
 - Drag & drop canvas elements including text, shapes, images and more.
 - Event handling for canvas elements.
 - Under 15KB minified, 4KB gzip.
+- [CodePen Demo](http://cdpn.io/BJehc)
 
 How to build
 ------------

@@ -59,9 +59,8 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
 
         // Mouse up
         if (object) {
-            mouseUpObject.apply(this, [object]);
+            mouseUpObject.apply(this, [event, object]);
         }
-
     }
 
     function dragStartObject(event, object, coordinates, dragHold) {

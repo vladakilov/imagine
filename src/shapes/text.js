@@ -29,7 +29,7 @@ define(['shapes/shape'], function(Shape) {
         ctx.fillStyle = this.options.fill;
         ctx.textBaseline = this.options.baseline;
         var measure = ctx.measureText(this.options.text);
-        var width = this.options.width || measure.width;
+        var width = measure.width;
         var height = this.options.height || this.getLineHeight();
         this.options.width = width;
         this.options.height = height;
