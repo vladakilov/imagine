@@ -30,7 +30,7 @@ define(['pubsub'], function(pubsub) {
     Shape.prototype.drawBorder = function(ctx) {
         var borderWidth = 1;
         ctx.save();
-        ctx.strokeStyle = 'blue';
+        ctx.strokeStyle = 'skyblue';
         ctx.lineWidth = borderWidth;
         ctx.strokeRect(
             this.options.left - (borderWidth/2),
@@ -46,7 +46,7 @@ define(['pubsub'], function(pubsub) {
 
         pubsub.subscribe(eventType, function(eventType, data) {
             if ((_this === data.object) && callback) {
-                callback(eventType, data);
+                callback.apply(_this, [eventType, data]);
             }
         });
     };
