@@ -3,13 +3,16 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
-        <title>Canvas by vladakilov</title>
+        <title>imagine.js by Vlad Akilov</title>
+
+        <meta name="description" content="imagine.js A lightweight HTML5 Canvas Library by Vlad Akilov">
+        <meta name="author" content="Vlad Akilov">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
         <link rel="stylesheet" href="stylesheets/styles.css">
         <link rel="stylesheet" href="stylesheets/prism.css">
         <link rel="stylesheet" href="stylesheets/pygment_trac.css">
         <script src="javascripts/imagine.min.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -55,6 +58,112 @@
                 </ol>
 
                 <h2><a name="example-use" class="anchor" href="#example-use"><span class="octicon octicon-link"></span></a>Example Use</h2>
+
+                <div class="example-code">
+                    <h4>
+                        <a name="add-rectangle-to-canvas" class="anchor" href="#add-rectangle-to-canvas"><span class="octicon octicon-link"></span></a>
+                        Multiple Canvas Objects and showing event listening <span id="loadtime"></span>
+                    </h4>
+                    <p>Code for this example - <a href="http://codepen.io/vladakilov/pen/BJehc">http://codepen.io/vladakilov/pen/BJehc</a></p>
+                    <canvas id="demo-canvas" class="canvas" width="500" height="500"></canvas>
+                    <script>
+                        (function(){
+                            var t1, t2,
+                                loadTimeEl = document.getElementById('loadtime'),
+                                startTimer = function() {
+                                    t1 = new Date().getTime();
+                                    return t1;
+                                },
+                                stopTimer = function() {
+                                    t2 = new Date().getTime();
+                                    return t2 - t1;
+                                },
+                                randomIntFromInterval = function(min, max) {
+                                    return Math.floor(Math.random() * (max - min + 1) + min);
+                                };
+
+                            startTimer();
+                            var c1 = new imagine.Canvas('demo-canvas');
+
+                            var rect = new imagine.Rectangle({
+                                top: 200
+                            });
+
+                            var circle = new imagine.Circle();
+
+                            var text = new imagine.Text({
+                                top: 200,
+                                left: 150,
+                                font: 'Helvetica Neue',
+                                text: 'ImagineJS is simple!'
+                            });
+
+                            var imageObj = new Image();
+                            imageObj.src = 'http://www.w3.org/html/logo/downloads/HTML5_Logo_512.png';
+                            imageObj.addEventListener('load', function() {
+                                img = new imagine.Image(imageObj, {
+                                    left: 30,
+                                    top: 0,
+                                    angle: 0,
+                                    opacity: .5,
+                                    width: 128,
+                                    height: 128
+                                });
+                                c1.add(img);
+                            }, false);
+
+                            c1.add(circle);
+                            c1.add(rect);
+                            c1.add(text);
+
+                            for (var i = 0; i < 15; i++) {
+                                var circle = new imagine.Circle({
+                                    top: randomIntFromInterval(0, 400),
+                                    left: randomIntFromInterval(0, 400),
+                                    radius: randomIntFromInterval(2, 30),
+                                    fill: '#' + Math.floor(Math.random() * 16777215).toString(16)
+                                });
+                                c1.add(circle);
+                            }
+
+                            loadTimeEl.innerHTML = '(Load Time: ' + stopTimer() + ' ms)';
+                            text.on('dragging', function() {
+                                this.set({
+                                    text: 'dragging'
+                                })
+                                c1.reDrawObjects();
+                            });
+
+                            text.on('mousedown', function() {
+                                this.set({
+                                    text: 'mousedown'
+                                });
+                                c1.reDrawObjects();
+                            });
+
+                            text.on('mouseup', function() {
+                                this.set({
+                                    text: 'mouseup'
+                                })
+                                c1.reDrawObjects();
+                            });
+
+                            text.on('mouseover', function() {
+                                this.set({
+                                    text: 'mouseover'
+                                })
+                                c1.reDrawObjects();
+                            });
+
+                            text.on('mouseout', function() {
+                                this.set({
+                                    text: 'mouseout'
+                                });
+                                c1.reDrawObjects();
+                            });
+                        })();
+                    </script>
+                </div>
 
                 <div class="example-code">
                     <h4><a name="add-rectangle-to-canvas" class="anchor" href="#add-rectangle-to-canvas"><span class="octicon octicon-link"></span></a>Add rectangle to canvas</h4>
@@ -164,6 +273,14 @@ canvas.add(text);</code></pre>
     </div>
     <script src="javascripts/scale.fix.js"></script>
     <script src="javascripts/prism.js"></script>
-    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-50743207-1', 'vladakilov.github.io');
+        ga('send', 'pageview');
+    </script>
   </body>
 </html>
