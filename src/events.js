@@ -61,6 +61,18 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         if (object) {
             mouseUpObject.apply(this, [event, object]);
         }
+
+        // Edgecase when size of object changes and mouse up
+        // over just the canvas not an object
+        if (!object && isDragging) {
+            isDragging = false;
+            var activeObject = this.getActiveObject();
+
+            if (activeObject) {
+                activeObject.trigger('dragend');
+                this.canvas.style.cursor = 'default';
+            }
+        }
     }
 
     function dragStartObject(event, object, coordinates, dragHold) {
