@@ -53,15 +53,16 @@ define([], function() {
     }
 
     function getTargetObject(coordinates, canvasObjects) {
-        var highestLayer = -1;
-        var newIndex;
+        var highestLayer = -1,
+            objectCount = canvasObjects.length,
+            newIndex;
 
-        for (var index in canvasObjects) {
-            var object = canvasObjects[index];
+        for (var i = 0; i < objectCount; i++) {
+            var object = canvasObjects[i];
             var isHit = isTargetHit(object, coordinates);
 
-            if (isHit && (index > highestLayer)) {
-                newIndex = index;
+            if (isHit && (i > highestLayer)) {
+                newIndex = i;
             }
         }
 

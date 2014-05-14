@@ -5,7 +5,7 @@ define(['events'], function(events) {
         this.canvas = document.getElementById(this.id);
         this.ctx = this.canvas.getContext('2d');
         this.canvas.addEventListener('mousedown', this, false);
-        window.addEventListener('mousemove', this, false);
+        this.canvas.addEventListener('mousemove', this, false);
         this.canvasObjects = [];
     }
 
@@ -34,8 +34,10 @@ define(['events'], function(events) {
     };
 
     Canvas.prototype.clearActiveObject = function() {
-        for (var obj in this.canvasObjects) {
-            this.canvasObjects[obj].isActive = false;
+        var objectCount = this.getObjectCount();
+
+        for (var i = 0; i < objectCount; i++) {
+            this.canvasObjects[i].isActive = false;
         }
     };
 
@@ -61,8 +63,10 @@ define(['events'], function(events) {
 
     Canvas.prototype.reDrawObjects = function() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        for (var object in this.canvasObjects) {
-            var obj = this.canvasObjects[object];
+        var objectCount = this.getObjectCount();
+
+        for (var i = 0; i < objectCount; i++) {
+            var obj = this.canvasObjects[i];
             obj.draw(this.ctx);
         }
     };
