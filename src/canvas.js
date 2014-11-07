@@ -25,16 +25,26 @@ define(['events'], function(events) {
         return this.canvasObjects.length;
     };
 
-    Canvas.prototype.getActiveObject = function() {
-        return this.activeObject;
+    Canvas.prototype.setHitObject = function(object) {
+        this.hitObject = object;
+    };
+
+    Canvas.prototype.getHitObject = function() {
+        return this.hitObject;
     };
 
     Canvas.prototype.setActiveObject = function(object) {
         this.activeObject = object;
+        object.isActive = true;
+    };
+
+    Canvas.prototype.getActiveObject = function() {
+        return this.activeObject;
     };
 
     Canvas.prototype.clearActiveObject = function() {
         var objectCount = this.getObjectCount();
+        this.activeObject = false;
 
         for (var i = 0; i < objectCount; i++) {
             this.canvasObjects[i].isActive = false;

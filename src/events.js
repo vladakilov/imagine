@@ -24,7 +24,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
     }
 
     function mouseMoveListener(event) {
-        var object = this.getActiveObject();
+        var object = this.getHitObject();
         var coordinates = mouse.windowToCanvas(event, this.canvas);
         var newObject;
 
@@ -66,10 +66,10 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
         // over just the canvas not an object
         if (!object && isDragging) {
             isDragging = false;
-            var activeObject = this.getActiveObject();
+            var hitObject = this.getHitObject();
 
-            if (activeObject) {
-                activeObject.trigger('dragend');
+            if (hitObject) {
+                hitObject.trigger('dragend');
                 this.canvas.style.cursor = 'default';
             }
         }
@@ -106,8 +106,9 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
     }
 
     function mouseDownObject(event, object) {
+        this.setHitObject(object);
         this.setActiveObject(object);
-        object.isActive = true;
+
         pubsub.publish('mousedown', {
             event: event,
             object: object
@@ -115,7 +116,7 @@ define(['pubsub', 'util/mouse'], function(pubsub, mouse) {
     }
 
     function mouseOverObject(event, object) {
-        this.setActiveObject(object);
+        this.setHitObject(object);
         this.setCursorOnActiveObject(object);
 
         pubsub.publish('mouseover', {
