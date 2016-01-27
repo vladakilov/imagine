@@ -6,7 +6,7 @@ var NATIVE_EVENTS = CONSTANTS.EVENTS.NATIVE,
     CUSTOM_EVENTS = CONSTANTS.EVENTS.CUSTOM;
 
 var isDragging,
-    dragHold = {}
+    dragHold = {};
 
 function mouseDownListener(event) {
     let coordinates = mouse.windowToCanvas(event, this.canvas);
