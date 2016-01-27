@@ -1,8 +1,12 @@
 import pubsub from './pubsub';
+import CONSTANTS from './constants';
 import * as mouse from './util/mouse';
 
+var NATIVE_EVENTS = CONSTANTS.EVENTS.NATIVE,
+    CUSTOM_EVENTS = CONSTANTS.EVENTS.CUSTOM;
+
 var isDragging,
-    dragHold = {};
+    dragHold = {}
 
 function mouseDownListener(event) {
     let coordinates = mouse.windowToCanvas(event, this.canvas);
@@ -20,8 +24,8 @@ function mouseDownListener(event) {
         dragStartObject.apply(this, [event, object, coordinates, dragHold]);
     }
 
-    this.canvas.removeEventListener('mousedown', this, false);
-    window.addEventListener('mouseup', this, false);
+    this.canvas.removeEventListener(NATIVE_EVENTS.MOUSEDOWN, this, false);
+    window.addEventListener(NATIVE_EVENTS.MOUSEUP, this, false);
 }
 
 function mouseMoveListener(event) {
@@ -51,8 +55,8 @@ function mouseUpListener(event) {
     let object = mouse.getTargetObject(coordinates, this.canvasObjects);
 
     // Dragging stopped
-    this.canvas.addEventListener('mousedown', this, false);
-    window.removeEventListener('mouseup', this, false);
+    this.canvas.addEventListener(NATIVE_EVENTS.MOUSEDOWN, this, false);
+    window.removeEventListener(NATIVE_EVENTS.MOUSEUP, this, false);
     if (object && isDragging) {
         isDragging = false;
         dragEndObject.apply(this, [event, object]);
@@ -70,7 +74,7 @@ function mouseUpListener(event) {
         var hitObject = this.getHitObject();
 
         if (hitObject) {
-            hitObject.trigger('dragend');
+            hitObject.trigger(CUSTOM_EVENTS.DRAGEND);
             this.canvas.style.cursor = 'default';
         }
     }
@@ -79,9 +83,9 @@ function mouseUpListener(event) {
 function dragStartObject(event, object, coordinates, dragHold) {
     dragHold.x = coordinates.x - object.options.left;
     dragHold.y = coordinates.y - object.options.top;
-    window.addEventListener('mousemove', this, false);
+    window.addEventListener(NATIVE_EVENTS.MOUSEMOVE, this, false);
 
-    pubsub.publish('dragstart', {
+    pubsub.publish(CUSTOM_EVENTS.DRAGSTART, {
         event: event,
         object: object
     });
@@ -93,14 +97,14 @@ function dragObject(event, object, coordinates, dragHold) {
     options.left = position.x;
     options.top = position.y;
 
-    pubsub.publish('dragging', {
+    pubsub.publish(CUSTOM_EVENTS.DRAGGING, {
         event: event,
         object: object
     });
 }
 
 function dragEndObject(event, object) {
-    pubsub.publish('dragend', {
+    pubsub.publish(CUSTOM_EVENTS.DRAGEND, {
         event: event,
         object: object
     });
@@ -110,7 +114,7 @@ function mouseDownObject(event, object) {
     this.setHitObject(object);
     this.setActiveObject(object);
 
-    pubsub.publish('mousedown', {
+    pubsub.publish(CUSTOM_EVENTS.MOUSEDOWN, {
         event: event,
         object: object
     });
@@ -120,21 +124,21 @@ function mouseOverObject(event, object) {
     this.setHitObject(object);
     this.setCursorOnActiveObject(object);
 
-    pubsub.publish('mouseover', {
+    pubsub.publish(CUSTOM_EVENTS.MOUSEOVER, {
         event: event,
         object: object
     });
 }
 
 function mouseUpObject(event, object) {
-    pubsub.publish('mouseup', {
+    pubsub.publish(CUSTOM_EVENTS.MOUSEUP, {
         event: event,
         object: object
     });
 }
 
 function mouseOutObject(event, object) {
-    pubsub.publish('mouseout', {
+    pubsub.publish(CUSTOM_EVENTS.MOUSEOUT, {
         event: event,
         object: object
     });
