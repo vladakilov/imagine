@@ -53,18 +53,18 @@ function isTargetHit(object, coordinates) {
 function getTargetObject(coordinates, canvasObjects) {
     var highestLayer = -1,
         objectCount = canvasObjects.length,
-        newIndex;
+        newIndex = null;
 
     for (var i = 0; i < objectCount; i++) {
         var object = canvasObjects[i];
         var isHit = isTargetHit(object, coordinates);
 
-        if (isHit && (i > highestLayer)) {
+        if (isHit && (object.options.layer > highestLayer)) {
             newIndex = i;
         }
     }
 
-    return newIndex ? canvasObjects[newIndex] : false;
+    return (newIndex !== null) ? canvasObjects[newIndex] : false;
 }
 
 export {
