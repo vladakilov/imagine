@@ -10,7 +10,7 @@
         "url": "git://github.com/vladakilov/imagine.git"
     },
     "scripts": {
-        "test": "grunt test"
+        "test": "grunt"
     },
     "devDependencies": {
         "babelify": "^7.2.0",
