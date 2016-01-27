@@ -18,6 +18,7 @@ module.exports = function(grunt) {
                 eqnull: true,
                 browser: true,
                 unused: true,
+                esversion: 6
             },
             uses_defaults: [
                 'Gruntfile.js',
@@ -28,19 +29,44 @@ module.exports = function(grunt) {
             ]
         },
 
-        requirejs: {
-            compile: {
+        browserify: {
+            dev: {
                 options: {
-                    name: 'imagine',
-                    baseUrl: 'src',
-                    include: ['../bower_components/almond/almond.js'],
-                    wrap: {
-                        startFile: 'src/_start.js',
-                        endFile: 'src/_end.js'
+                    browserifyOptions: {
+                        debug: true
                     },
-                    optimize: 'uglify2',
-                    preserveLicenseComments: false,
-                    out: 'dist/imagine.min.js'
+                    transform: [
+                        ['babelify', {
+                            presets: ['es2015']
+                        }]
+                    ]
+                },
+                files: {
+                    'dist/imagine.js': ['src/imagine.js']
+                }
+            },
+
+            dist: {
+                options: {
+                    browserifyOptions: {
+                        debug: false
+                    },
+                    transform: [
+                        ['babelify', {
+                            presets: ['es2015']
+                        }]
+                    ]
+                },
+                files: {
+                    'dist/imagine.js': ['src/imagine.js']
+                }
+            }
+        },
+
+        uglify: {
+            my_target: {
+                files: {
+                    'dist/imagine.min.js': ['dist/imagine.js']
                 }
             }
         }
@@ -56,12 +82,19 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-browserify');
 
     // Define your tasks here
     grunt.registerTask('default', [
-        'jshint',
-        'qunit',
-        'requirejs'
+        'clean',
+        'browserify:dev',
+        'test'
+    ]);
+
+    grunt.registerTask('prod', [
+        'clean',
+        'browserify:dist',
+        'uglify'
     ]);
 
     grunt.registerTask('test', [

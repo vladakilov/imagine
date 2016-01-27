@@ -1,6 +1,7 @@
-define(['events'], function(events) {
+import * as events from './events';
 
-    function Canvas(id) {
+class Canvas {
+    constructor(id) {
         this.id = id;
         this.canvas = document.getElementById(this.id);
         this.ctx = this.canvas.getContext('2d');
@@ -9,83 +10,83 @@ define(['events'], function(events) {
         this.canvasObjects = [];
     }
 
-    Canvas.prototype.getCanvasId = function() {
+    getCanvasId() {
         return this.id;
-    };
+    }
 
-    Canvas.prototype.getCanvas = function() {
+    getCanvas() {
         return this.canvas;
-    };
+    }
 
-    Canvas.prototype.getContext = function() {
+    getContext() {
         return this.ctx;
-    };
+    }
 
-    Canvas.prototype.getObjectCount = function() {
+    getObjectCount() {
         return this.canvasObjects.length;
-    };
+    }
 
-    Canvas.prototype.setHitObject = function(object) {
+    setHitObject(object) {
         this.hitObject = object;
-    };
+    }
 
-    Canvas.prototype.getHitObject = function() {
+    getHitObject() {
         return this.hitObject;
-    };
+    }
 
-    Canvas.prototype.setActiveObject = function(object) {
+    setActiveObject(object) {
         this.activeObject = object;
         object.isActive = true;
-    };
+    }
 
-    Canvas.prototype.getActiveObject = function() {
+    getActiveObject() {
         return this.activeObject;
-    };
+    }
 
-    Canvas.prototype.clearActiveObject = function() {
-        var objectCount = this.getObjectCount();
+    clearActiveObject() {
+        let objectCount = this.getObjectCount();
         this.activeObject = false;
 
-        for (var i = 0; i < objectCount; i++) {
+        for (let i = 0; i < objectCount; i++) {
             this.canvasObjects[i].isActive = false;
         }
-    };
+    }
 
-    Canvas.prototype.toDataURL = function(mimetype) {
+    toDataURL(mimetype) {
         return this.canvas.toDataURL(mimetype);
-    };
+    }
 
-    Canvas.prototype.remove = function(object) {
-        var index = this.canvasObjects.indexOf(object);
+    remove(object) {
+        let index = this.canvasObjects.indexOf(object);
         if (index !== -1) {
             this.canvasObjects.splice(index, 1);
             this.reDrawObjects();
         }
 
         return this;
-    };
+    }
 
-    Canvas.prototype.add = function(object) {
+    add(object) {
         object.draw(this.ctx);
         object.options.layer = this.getObjectCount() + 1;
         this.canvasObjects.push(object);
-    };
+    }
 
-    Canvas.prototype.reDrawObjects = function() {
+    reDrawObjects() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        var objectCount = this.getObjectCount();
+        let objectCount = this.getObjectCount();
 
-        for (var i = 0; i < objectCount; i++) {
-            var obj = this.canvasObjects[i];
+        for (let i = 0; i < objectCount; i++) {
+            let obj = this.canvasObjects[i];
             obj.draw(this.ctx);
         }
-    };
+    }
 
-    Canvas.prototype.setCursorOnActiveObject = function(object) {
+    setCursorOnActiveObject(object) {
         this.canvas.style.cursor = (object) ? 'move' : 'default';
-    };
+    }
 
-    Canvas.prototype.handleEvent = function(event) {
+    handleEvent(event) {
         switch (event.type) {
             case 'mousedown':
                 events.mouseDownListener.apply(this, [event]);
@@ -99,8 +100,8 @@ define(['events'], function(events) {
         }
 
         this.reDrawObjects();
-    };
+    }
 
-    return Canvas;
+}
 
-});
+export default Canvas;

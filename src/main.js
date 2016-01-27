@@ -1,3 +1,0 @@
-require(['imagine'], function() {
-
-});

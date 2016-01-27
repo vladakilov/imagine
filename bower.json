@@ -1,6 +1,6 @@
 {
     "name": "imagine.js",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "authors": [
         "Vlad Akilov <vlad.akilov@gmail.com>"
     ],
@@ -12,10 +12,7 @@
     "license": "MIT",
     "homepage": "github.com/vladakilov/imagine",
     "dependencies": {
-        "requirejs": "~2.1.11",
-        "almond": "~0.2.9",
         "qunit": "~1.14.0",
-        "blanket": "~1.1.5",
         "pubsub-js": "~1.4.2"
     }
 }

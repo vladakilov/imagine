@@ -1,15 +1,16 @@
-define(['../bower_components/pubsub-js/src/pubsub'], function(PubSub) {
+import PubSub from '../bower_components/pubsub-js/src/pubsub';
 
-    function publish(eventType, data) {
-        return PubSub.publish(eventType, data);
-    }
+function publish(eventType, data) {
+    return PubSub.publish(eventType, data);
+}
 
-    function subscribe(eventType, callback) {
-        return PubSub.subscribe(eventType, callback);
-    }
+function subscribe(eventType, callback) {
+    return PubSub.subscribe(eventType, callback);
+}
 
-    return {
-        publish: publish,
-        subscribe: subscribe
-    };
-});
+var exports = {
+    publish: publish,
+    subscribe: subscribe
+};
+
+export default exports;
